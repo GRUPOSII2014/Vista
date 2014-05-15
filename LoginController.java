@@ -18,7 +18,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class LoginController implements Serializable {
     
-    private String nss;
+    private Integer nss;
     private String tipoUsuario;
 
     /**
@@ -27,11 +27,11 @@ public class LoginController implements Serializable {
     public LoginController() {
     }
 
-    public String getNss() {
+    public Integer getNss() {
         return nss;
     }
 
-    public void setNss(String nss) {
+    public void setNss(Integer nss) {
         this.nss = nss;
     }
 

@@ -6,10 +6,12 @@
 
 package Vista;
 
+import Ejb.HospitalesEJB;
 import Entidades.Hospital;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -22,7 +24,10 @@ import javax.faces.bean.RequestScoped;
 public class HospitalesControllerBeans {
 
     private Date fecha;
-    private List<Hospital> hospitales = new ArrayList<Hospital>();
+        
+    @EJB
+    private HospitalesEJB hospitales;
+    
     /**
      * Creates a new instance of HospitalesController
      */
@@ -39,20 +44,7 @@ public class HospitalesControllerBeans {
 
     
     public List<Hospital> getHospitales() {
-        Hospital h = new Hospital();
-        h.setCiudad("Málaga");
-        h.setCodigoPostal(29010);
-        h.setDireccion("Avenida de Carlos Haya");
-        h.setHoraApertura(new Date());
-        h.setHoraCierre(new Date());
-        h.setNombre("Hospital Universitario Carlos Haya");
-        h.setLocalizacion("36.723070, -4.449301");
-        if(!hospitales.contains(h))hospitales.add(h);
-        return hospitales;
+        return hospitales.allHospitales();
     }
-
-    public void setHospitales(List<Hospital> hospitales) {
-        this.hospitales = hospitales;
-    }
-    
+     
 }

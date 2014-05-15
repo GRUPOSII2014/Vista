@@ -8,6 +8,7 @@ package Vista;
 import Ejb.NoticiasImpl;
 import Ejb.PersonaEjb;
 import Entidades.Noticia;
+import Entidades.Persona;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -41,10 +42,11 @@ public class IndexController {
 
     public String doLogin() {
         String web = "principal.xhtml";
-        Integer existe = persona.compruebaPersona(usuario, passwd);
+        Persona p = persona.compruebaPersona(usuario, passwd);
         
-        if (existe != null) {
-            
+        if (p != null) {
+            login.setNss(p.getNumSegSocial());
+            login.setTipoUsuario("MEDICO");
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Error", "No existe el usuario o no coinciden las credenciales."));
