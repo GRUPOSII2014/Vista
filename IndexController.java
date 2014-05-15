@@ -5,12 +5,12 @@ package Vista;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
+import Ejb.NoticiasImpl;
+import Ejb.PersonaEjb;
 import Entidades.Noticia;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -24,51 +24,48 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class IndexController {
 
-    private String usuario, passwd;
-    private List<Noticia> noticias;
+    private Integer usuario;
+    private String passwd;
     
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
     
+    @EJB
+    private NoticiasImpl noticias;
+    
+    @EJB
+    private PersonaEjb persona;
+
     public IndexController() {
     }
-    
+
     public String doLogin() {
         String web = "principal.xhtml";
+        Integer existe = persona.compruebaPersona(usuario, passwd);
         
-        if (usuario.equalsIgnoreCase("medico")) {
-            login.setNss("123456789");
-            login.setTipoUsuario("MEDICO");
-        } else if (usuario.equalsIgnoreCase("enfermero")) {
-            login.setNss("123456789");
-            login.setTipoUsuario("ENFERMERO");
-        } else if (usuario.equalsIgnoreCase("adminis")) {
-            login.setNss("123456789");
-            login.setTipoUsuario("ADMINIS");
-        } else if (usuario.equalsIgnoreCase("paciente")) {
-            login.setNss("123456789");
-            login.setTipoUsuario("PACIENTE");
+        if (existe != null) {
+            
         } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Error", "No existe el usuario o no coinciden las credenciales."));
             web = null;
         }
         
         return web;
     }
-    
-  
-    
+
     public String doLogout() {
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.getExternalContext().invalidateSession();
         login = null;
         return "index.xhtml";
     }
-    
-    public String getUsuario() {
+
+    public Integer getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
 
@@ -79,29 +76,13 @@ public class IndexController {
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
-    
+
     public List<Noticia> getNoticias() {
-        noticias = new ArrayList<Noticia>();
-        Noticia a = new Noticia();
-        a.setTitulo("Primera Noticia");
-        a.setDescripcion("Esta es una noticia que aparecerá en la página principal de la aplicación");
-        a.setFecha(new Date());
-        noticias.add(a);
-        a = new Noticia();
-        a.setTitulo("Segunda Noticia");
-        a.setDescripcion("Esta es una noticia que debe aparecer justo debajo de la primera en la página principal de la aplicación.");
-        a.setFecha(new Date());
-        noticias.add(a);
-        return noticias;
+        return noticias.allNoticias();
     }
-
-    public void setNoticias(List<Noticia> noticias) {
-        this.noticias = noticias;
-    }
-
+    
     public void setLogin(LoginController login) {
         this.login = login;
     }
-    
-    
+
 }
