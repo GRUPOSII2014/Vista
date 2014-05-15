@@ -6,16 +6,13 @@
 
 package Vista;
 
+import Ejb.CitaEjb;
 import Entidades.Cita;
-import Entidades.Enumerados;
-import Entidades.Medico;
-import Entidades.Persona;
 import Entidades.Urgencia;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -24,14 +21,16 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class TrabajosBean {
-    private List<Cita> citas;
-    private List<Urgencia> urgencias; 
-    private String muestra="";
+
     private Urgencia urge;
+    @Inject
+    private CitaEjb trabajos;
+
     /**
      * Creates a new instance of CitasBean
      */
     public TrabajosBean() {
+        /*
         citas = new ArrayList<>();
         urgencias = new ArrayList<>();
         Persona p1 = new Persona();
@@ -83,6 +82,7 @@ public class TrabajosBean {
         u2.setTrabajador(doctor);
         urgencias.add(u1);
         urgencias.add(u2);
+                */
     }
 
     public Urgencia getUrge() {
@@ -93,49 +93,29 @@ public class TrabajosBean {
         this.urge = urge;
     }
 
+    public List<Cita> getCitas(String nss) {
+        return trabajos.citasNoAtendidas(nss);
+    }
+
+    public List<Urgencia> getUrgencias(String nss) {
+        return trabajos.urgenciasEspera(nss);
+    }
     
-    public String getMuestra() {
-        return muestra;
-    }
-
-    public void setMuestra(String muestra) {
-        this.muestra = muestra;
-    }
-
-    public List<Cita> getCitas() {
-        return citas;
-    }
-
-    public void setCitas(List<Cita> citas) {
-        this.citas = citas;
-    }
-
-    public List<Urgencia> getUrgencias() {
-        return urgencias;
-    }
-
-    public void setUrgencias(List<Urgencia> urgencias) {
-        this.urgencias = urgencias;
-    } 
-    
-    public void muestraUregncias(){
-        muestra="urgencias";
-    }
-    public void muestraCitas(){
-        muestra="citas";
-    }
     public String doDiagnostico(Cita cita){
         return "Diagnostico";
     }
     
     public String doDiagnosticoUrgencia(Urgencia u){
-        
+        trabajos.avanzaAtendiendo(u);
         return "Diagnostico";
     }
+    
     public String doTratar(Cita c){
         return "tratamiento";
     }
+    
     public String doTratarUrgencia(Urgencia u){
+        trabajos.avanzaTratamiento(u);
         return "tratamiento";
     }
 }

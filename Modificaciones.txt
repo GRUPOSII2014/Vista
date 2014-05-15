@@ -1,0 +1,6 @@
+Modificaciones
+
+Fecha nacimiento en Persona.
+Arregladas Relaciones de hospital-planta-habitaciones-cama.
+Plantilla Reparadas.
+Añadida Vista Para ver todas las personas.
