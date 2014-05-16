@@ -8,10 +8,7 @@ package Vista;
 
 import Ejb.PersonaEjb;
 import Entidades.Alerta;
-import Entidades.Mensaje;
 import Entidades.Persona;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -40,8 +37,8 @@ public class PrincipalControllerBeans {
         return persona.getPersona(session.getNss());
     }
     
-    public String verMiHistoria(String nss) {
-        session.setBuscado(Integer.parseInt(nss));
+    public String verMiHistoria(Integer nss) {
+        session.setBuscado(nss);
         return "HistoriaClinica.xhtml";
     }
 
@@ -53,17 +50,22 @@ public class PrincipalControllerBeans {
         this.session = session;
     }
     
-    public String verMiTrabajo(String nss){
-        session.setBuscado(Integer.parseInt(nss));
+    public String verMiTrabajo(Integer nss){
+        session.setBuscado(nss);
         return "Trabajo.xhtml";
     }
     
-    public String verMisCitas (String nss){
-        session.setBuscado(Integer.parseInt(nss));
+    public String verMisCitas (Integer nss){
+        session.setBuscado(nss);
         return "citas.xhtml";
     }
     
     public List<Alerta> getAlertas() {
         return persona.allAlertas(session.getNss());
+    }
+    
+    public String cambiaPass(Integer nss){
+        session.setBuscado(nss);
+        return "Cambiarclave.xhtml";
     }
 }

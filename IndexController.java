@@ -5,7 +5,7 @@ package Vista;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Ejb.NoticiasImpl;
+import Ejb.NoticiasEJB;
 import Ejb.PersonaEjb;
 import Entidades.Noticia;
 import Entidades.Persona;
@@ -32,7 +32,7 @@ public class IndexController {
     private LoginController login;
     
     @EJB
-    private NoticiasImpl noticias;
+    private NoticiasEJB noticias;
     
     @EJB
     private PersonaEjb persona;

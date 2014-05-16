@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vista;
 
-
-
+import Ejb.PersonaEjb;
+import Entidades.Persona;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -21,8 +22,14 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @Dependent
 public class CambiarClaveBeans {
-    private String actual,nueva,nueva2;
-    
+
+    private String actual, nueva, nueva2;
+    @EJB
+    private PersonaEjb ejb;
+
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController session;
+
     /**
      * Creates a new instance of CambiarClave
      */
@@ -52,14 +59,19 @@ public class CambiarClaveBeans {
     public void setNueva2(String nueva2) {
         this.nueva2 = nueva2;
     }
-    
-    public void doCambiarClave(ActionEvent actionEvent){
-         FacesContext context = FacesContext.getCurrentInstance();  
-         if(nueva.equalsIgnoreCase(nueva2)){
-            context.addMessage(null, new FacesMessage("Exito", "Se ha cambiado la clave correctamente")); 
-         }else{
-             context.addMessage(null, new FacesMessage("Error", "Las contraseñas no coinciden"));
-         }
+
+    public void doCambiarClave(ActionEvent actionEvent) {
+        Persona p = ejb.getPersona(session.getBuscado());
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(p.getPassword().equals(actual)){
+            if (nueva.equalsIgnoreCase(nueva2)) {
+                context.addMessage(null, new FacesMessage("Exito", "Se ha cambiado la clave correctamente"));
+            } else {
+                context.addMessage(null, new FacesMessage("Error", "Las contraseñas no coinciden"));
+            }
+        }else{
+            context.addMessage(null, new FacesMessage("Error", "Contraseña de usuario incorrecta"));
+        }
     }
-    
+
 }
