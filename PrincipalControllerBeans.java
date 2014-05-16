@@ -6,7 +6,7 @@
 
 package Vista;
 
-import Ejb.PersonaImpl;
+import Ejb.PersonaEjb;
 import Entidades.Alerta;
 import Entidades.Mensaje;
 import Entidades.Persona;
@@ -30,13 +30,11 @@ public class PrincipalControllerBeans {
     private List<Alerta> alertas;
     
     @EJB
-    private PersonaImpl persona;
+    private PersonaEjb persona;
     
-=======
     @ManagedProperty(value = "#{loginController}")
     private LoginController session;
 
->>>>>>> d3182d19b0b829993edf3f3d9c5c1d91608f8862
     public PrincipalControllerBeans() {
         
         alertas = new ArrayList<Alerta>();
@@ -70,8 +68,9 @@ public class PrincipalControllerBeans {
     }
 
     public Persona getPersona() {
-        return persona.getPersona(login.getNss());
-=======
+        return persona.getPersona(session.getNss());
+    }
+    
     public String verMiHistoria(String nss) {
         session.setBuscado(Integer.parseInt(nss));
         return "HistoriaClinica.xhtml";
@@ -83,7 +82,6 @@ public class PrincipalControllerBeans {
 
     public void setSession(LoginController session) {
         this.session = session;
->>>>>>> d3182d19b0b829993edf3f3d9c5c1d91608f8862
     }
     
     public String verMiTrabajo(String nss){
