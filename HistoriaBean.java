@@ -24,6 +24,7 @@ public class HistoriaBean {
 
     private Informe informe = null;
     private HistoriaClinica historia;
+    
     @ManagedProperty(value = "#{loginController}")
     private LoginController session;
     @Inject
