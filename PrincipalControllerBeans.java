@@ -8,10 +8,7 @@ package Vista;
 
 import Ejb.PersonaEjb;
 import Entidades.Alerta;
-import Entidades.Mensaje;
 import Entidades.Persona;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
