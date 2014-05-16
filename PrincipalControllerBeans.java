@@ -26,47 +26,16 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class PrincipalControllerBeans {
 
-    private List<Mensaje> mensajes;
-    private List<Alerta> alertas;
-    
     @EJB
     private PersonaEjb persona;
     
     @ManagedProperty(value = "#{loginController}")
     private LoginController session;
 
-    public PrincipalControllerBeans() {
-        
-        alertas = new ArrayList<Alerta>();
-        mensajes = new ArrayList<Mensaje>();
-        Alerta a = new Alerta();
-        a.setAsunto("Probando");
-        a.setDescripcion("Esta es una prueba de alerta");
-        a.setFecha(new Date());
-        alertas.add(a);
-        a = new Alerta();
-        a.setAsunto("Otra alerta");
-        a.setDescripcion("Segunda alerta del administrativo");
-        a.setFecha(new Date());
-        alertas.add(a);
+    public PrincipalControllerBeans() {        
     }
 
-    public List<Mensaje> getMensajes() {
-        return mensajes;
-    }
-
-    public void setMensajes(List<Mensaje> mensajes) {
-        this.mensajes = mensajes;
-    }
-
-    public List<Alerta> getAlertas() {
-        return alertas;
-    }
-
-    public void setAlertas(List<Alerta> alertas) {
-        this.alertas = alertas;
-    }
-
+    
     public Persona getPersona() {
         return persona.getPersona(session.getNss());
     }
@@ -92,5 +61,9 @@ public class PrincipalControllerBeans {
     public String verMisCitas (String nss){
         session.setBuscado(Integer.parseInt(nss));
         return "citas.xhtml";
+    }
+    
+    public List<Alerta> getAlertas() {
+        return persona.allAlertas(session.getNss());
     }
 }
