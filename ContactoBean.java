@@ -33,11 +33,15 @@ public class ContactoBean {
     private LoginController session;
     
     public ContactoBean(){
+        
+    }
+
+    public String Inic(){
         if(session.getNss()!=null){
             p = ejb.getPersona(session.getNss());
         }
+        return "Iniciado";
     }
-
     public Persona getP() {
         return p;
     }
