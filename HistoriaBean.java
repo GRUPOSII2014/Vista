@@ -5,16 +5,14 @@
  */
 package Vista;
 
-import Entidades.Enumerados;
+import Ejb.PersonaEjb;
 import Entidades.HistoriaClinica;
 import Entidades.Informe;
-import Entidades.Medico;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import org.jboss.weld.context.RequestContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -24,13 +22,18 @@ import org.jboss.weld.context.RequestContext;
 @ViewScoped
 public class HistoriaBean {
 
-    private HistoriaClinica historia = new HistoriaClinica();
     private Informe informe = null;
+    private HistoriaClinica historia;
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController session;
+    @Inject
+    private PersonaEjb ejb;
 
     /**
      * Creates a new instance of HistoriaBean
      */
     public HistoriaBean() {
+        /*
         historia.setGrupoSanguineo("0");
         historia.setObservaciones("Prueba");
         historia.setFechaNacimiento(null);
@@ -79,14 +82,12 @@ public class HistoriaBean {
 
         informes.add(i3);
         historia.setInformes(informes);
+                */
     }
 
     public HistoriaClinica getHistoria() {
+        historia = ejb.getHistoria(session.getBuscado());
         return historia;
-    }
-
-    public void setHistoria(HistoriaClinica historia) {
-        this.historia = historia;
     }
 
     public List<Informe> getInformes() {
@@ -125,4 +126,13 @@ public class HistoriaBean {
             }
         }
     }
+
+    public LoginController getSession() {
+        return session;
+    }
+
+    public void setSession(LoginController session) {
+        this.session = session;
+    }
+    
 }

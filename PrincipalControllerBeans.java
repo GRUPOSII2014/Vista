@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vista;
 
 import Entidades.Alerta;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 /**
@@ -27,6 +27,9 @@ public class PrincipalControllerBeans {
     private TrabajadoresHospital administrativo;
     private List<Alerta> alertas;
     
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController session;
+
     public PrincipalControllerBeans() {
         administrativo = new TrabajadoresHospital();
         administrativo.setDNI("26806644Y");
@@ -77,5 +80,19 @@ public class PrincipalControllerBeans {
     public void setAlertas(List<Alerta> alertas) {
         this.alertas = alertas;
     }
+
+    public String verMiHistoria(String nss) {
+        session.setBuscado(Integer.parseInt(nss));
+        return "HistoriaClinica.xhtml";
+    }
+
+    public LoginController getSession() {
+        return session;
+    }
+
+    public void setSession(LoginController session) {
+        this.session = session;
+    }
+    
     
 }
