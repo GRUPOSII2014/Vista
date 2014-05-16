@@ -64,8 +64,13 @@ public class PrincipalControllerBeans {
         return persona.allAlertas(session.getNss());
     }
     
+<<<<<<< HEAD
     public String cambiaPass(Integer nss){
         session.setBuscado(nss);
         return "Cambiarclave.xhtml";
+=======
+    public List<Mensaje> getMensajes() {
+        return persona.allMensajes(session.getNss());
+>>>>>>> de3fa7cf7ebdb01a8fbcab4a5eca94b6ddb98411
     }
 }
