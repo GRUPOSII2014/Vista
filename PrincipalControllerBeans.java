@@ -32,6 +32,11 @@ public class PrincipalControllerBeans {
     @EJB
     private PersonaImpl persona;
     
+=======
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController session;
+
+>>>>>>> d3182d19b0b829993edf3f3d9c5c1d91608f8862
     public PrincipalControllerBeans() {
         
         alertas = new ArrayList<Alerta>();
@@ -66,6 +71,28 @@ public class PrincipalControllerBeans {
 
     public Persona getPersona() {
         return persona.getPersona(login.getNss());
+=======
+    public String verMiHistoria(String nss) {
+        session.setBuscado(Integer.parseInt(nss));
+        return "HistoriaClinica.xhtml";
+    }
+
+    public LoginController getSession() {
+        return session;
+    }
+
+    public void setSession(LoginController session) {
+        this.session = session;
+>>>>>>> d3182d19b0b829993edf3f3d9c5c1d91608f8862
     }
     
+    public String verMiTrabajo(String nss){
+        session.setBuscado(Integer.parseInt(nss));
+        return "Trabajo.xhtml";
+    }
+    
+    public String verMisCitas (String nss){
+        session.setBuscado(Integer.parseInt(nss));
+        return "citas.xhtml";
+    }
 }

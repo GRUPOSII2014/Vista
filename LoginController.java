@@ -20,7 +20,7 @@ public class LoginController implements Serializable {
     
     private Integer nss;
     private String tipoUsuario;
-
+    private Integer buscado;
     /**
      * Creates a new instance of LoginController
      */
@@ -43,4 +43,11 @@ public class LoginController implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public Integer getBuscado() {
+        return buscado;
+    }
+
+    public void setBuscado(Integer buscado) {
+        this.buscado = buscado;
+    }
 }
