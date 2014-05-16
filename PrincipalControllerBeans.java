@@ -94,5 +94,13 @@ public class PrincipalControllerBeans {
         this.session = session;
     }
     
+    public String verMiTrabajo(String nss){
+        session.setBuscado(Integer.parseInt(nss));
+        return "Trabajo.xhtml";
+    }
     
+    public String verMisCitas (String nss){
+        session.setBuscado(Integer.parseInt(nss));
+        return "citas.xhtml";
+    }
 }
