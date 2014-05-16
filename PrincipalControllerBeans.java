@@ -8,6 +8,7 @@ package Vista;
 
 import Ejb.PersonaEjb;
 import Entidades.Alerta;
+import Entidades.Mensaje;
 import Entidades.Persona;
 import java.util.List;
 import javax.ejb.EJB;
@@ -62,5 +63,9 @@ public class PrincipalControllerBeans {
     
     public List<Alerta> getAlertas() {
         return persona.allAlertas(session.getNss());
+    }
+    
+    public List<Mensaje> getMensajes() {
+        return persona.allMensajes(session.getNss());
     }
 }
