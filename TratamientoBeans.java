@@ -5,26 +5,28 @@
  */
 package Vista;
 
+import Ejb.IngresoEjb;
 import Entidades.Cantidad;
 import Entidades.Enumerados;
-import Entidades.Medicamento;
 import Entidades.Tratamiento;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
 
 
 @RequestScoped
 @ManagedBean
 public class TratamientoBeans {
 
-    private Tratamiento t;
+    private Tratamiento tratamiento;
     private List <Cantidad> listaCant;
-    private String obs;
+    
+    @Inject
+    private IngresoEjb ejb;
+    
     public TratamientoBeans() {
-        t=new Tratamiento();
+       /* t=new Tratamiento();
         listaCant= new ArrayList<Cantidad>();
         
         t.setNombre("Tratamiento 1");
@@ -82,52 +84,23 @@ public class TratamientoBeans {
         c3.setCantidad((float)1);
         listaCant.add(c1);
         listaCant.add(c2);
-        listaCant.add(c3);
+        listaCant.add(c3);*/
         
         
-    }
-
-    
-    public String getNombre(){
-        return getT().getNombre();
-    }
-    
-    public String getDescripcion(){
-        return getT().getDescripcion();
-    }
-    
-    public String getFechaInicio(){
-        int dia = getT().getFechaInicio().getDate();
-        int mes = getT().getFechaInicio().getMonth();
-        int anho = getT().getFechaInicio().getYear();
-        String s = Integer.toString(dia)+"/"+Integer.toString(mes)+"/"+Integer.toString(anho);
-        return s;
-    }
-    
-    public String getFechaFinalizacion(){
-        int dia = getT().getFechaFinalizacion().getDate();
-        int mes = getT().getFechaFinalizacion().getMonth();
-        int anho = getT().getFechaFinalizacion().getYear();
-        String s = Integer.toString(dia)+"/"+Integer.toString(mes)+"/"+Integer.toString(anho);
-        return s;
-    }
-    
-    public Enumerados.tipoTratamiento getTipo(){
-        return getT().getTipo();
     }
 
     /**
      * @return the t
      */
-    public Tratamiento getT() {
-        return t;
+    public Tratamiento getTratamiento() {
+        return tratamiento;
     }
 
     /**
      * @param t the t to set
      */
-    public void setT(Tratamiento t) {
-        this.t = t;
+    public void setT(Tratamiento tratamiento) {
+        this.tratamiento = tratamiento;
     }
 
     /**
@@ -143,17 +116,10 @@ public class TratamientoBeans {
     public void setListaCant(List <Cantidad> listaCant) {
         this.listaCant = listaCant;
     }
-
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
     
     public String terminarTratamiento(){
-        return "Trabajo";
+        ejb.terminarTratamiento(tratamiento);
+        return "Trabajo.xhtml";
     }
 
     
