@@ -10,10 +10,9 @@ import Ejb.CitaEjb;
 import Entidades.Cita;
 import Entidades.Urgencia;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
 
 /**
  *
@@ -24,7 +23,7 @@ import javax.inject.Inject;
 public class TrabajosBean {
 
     private Urgencia urge;
-    @Inject
+    @EJB
     private CitaEjb trabajos;
     
     //@ManagedProperty(value = "#{loginController}")
@@ -97,12 +96,12 @@ public class TrabajosBean {
         this.urge = urge;
     }
 
-    public List<Cita> gteCitas(String nss) {
-        return trabajos.citasNoAtendidas(nss+"");
+    public List<Cita> listadoCitas(Integer nss) {
+        return trabajos.citasNoAtendidas(nss);
     }
 
-    public List<Urgencia> getUrgencias(String nss) {
-        return trabajos.urgenciasEspera(nss+"");
+    public List<Urgencia> listadoUrgencias(Integer nss) {
+        return trabajos.urgenciasEspera(nss);
     }
     
     public String doDiagnostico(Cita cita){
