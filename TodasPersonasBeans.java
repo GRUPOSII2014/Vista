@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -31,9 +30,6 @@ public class TodasPersonasBeans {
     @Inject
     private PersonaEjb personaEjb;
 
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController session;
-    
     public TodasPersonasBeans() {
         
     }

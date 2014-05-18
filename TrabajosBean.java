@@ -11,7 +11,6 @@ import Entidades.Cita;
 import Entidades.Urgencia;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 
@@ -26,9 +25,6 @@ public class TrabajosBean {
     private Urgencia urge;
     @Inject
     private CitaEjb trabajos;
-    
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController session;
 
     /**
      * Creates a new instance of CitasBean
@@ -106,23 +102,19 @@ public class TrabajosBean {
     }
     
     public String doDiagnostico(Cita cita){
-        session.setBuscado(cita.getPersona().getNumSegSocial());
         return "Diagnostico";
     }
     
     public String doDiagnosticoUrgencia(Urgencia u){
         trabajos.avanzaAtendiendo(u);
-        session.setBuscado(u.getPersona().getNumSegSocial());
         return "Diagnostico";
     }
     
     public String doTratar(Cita c){
-        session.setBuscado(c.getPersona().getNumSegSocial());
         return "tratamiento";
     }
     
     public String doTratarUrgencia(Urgencia u){
-        session.setBuscado(u.getPersona().getNumSegSocial());
         trabajos.avanzaTratamiento(u);
         return "tratamiento";
     }
