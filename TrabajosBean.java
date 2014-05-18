@@ -27,8 +27,8 @@ public class TrabajosBean {
     @Inject
     private CitaEjb trabajos;
     
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController session;
+    //@ManagedProperty(value = "#{loginController}")
+    //private LoginController session;
 
     /**
      * Creates a new instance of CitasBean
@@ -97,32 +97,32 @@ public class TrabajosBean {
         this.urge = urge;
     }
 
-    public List<Cita> getCitas(String nss) {
-        return trabajos.citasNoAtendidas(nss);
+    public List<Cita> gteCitas(String nss) {
+        return trabajos.citasNoAtendidas(nss+"");
     }
 
     public List<Urgencia> getUrgencias(String nss) {
-        return trabajos.urgenciasEspera(nss);
+        return trabajos.urgenciasEspera(nss+"");
     }
     
     public String doDiagnostico(Cita cita){
-        session.setBuscado(cita.getPersona().getNumSegSocial());
+        //session.setBuscado(cita.getPersona().getNumSegSocial());
         return "Diagnostico";
     }
     
     public String doDiagnosticoUrgencia(Urgencia u){
         trabajos.avanzaAtendiendo(u);
-        session.setBuscado(u.getPersona().getNumSegSocial());
+        //session.setBuscado(u.getPersona().getNumSegSocial());
         return "Diagnostico";
     }
     
     public String doTratar(Cita c){
-        session.setBuscado(c.getPersona().getNumSegSocial());
+        //session.setBuscado(c.getPersona().getNumSegSocial());
         return "tratamiento";
     }
     
     public String doTratarUrgencia(Urgencia u){
-        session.setBuscado(u.getPersona().getNumSegSocial());
+        //session.setBuscado(u.getPersona().getNumSegSocial());
         trabajos.avanzaTratamiento(u);
         return "tratamiento";
     }
