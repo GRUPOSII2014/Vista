@@ -12,8 +12,9 @@ import Entidades.Urgencia;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
+import javax.ws.rs.HEAD;
 
 /**
  *
@@ -26,14 +27,8 @@ public class TrabajosBean {
     private Urgencia urge;
     @EJB
     private CitaEjb trabajos;
-<<<<<<< HEAD
-=======
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
-    
-    //@ManagedProperty(value = "#{loginController}")
-    //private LoginController session;
->>>>>>> f506675ce1630e2811cce1d88979f921608834b3
 
     /**
      * Creates a new instance of CitasBean
@@ -111,35 +106,23 @@ public class TrabajosBean {
     }
     
     public String doDiagnostico(Cita cita){
-<<<<<<< HEAD
-=======
         login.setBuscado(cita.getPersona().getNumSegSocial());
->>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         return "Diagnostico";
     }
     
     public String doDiagnosticoUrgencia(Urgencia u){
         trabajos.avanzaAtendiendo(u);
-<<<<<<< HEAD
-=======
         login.setBuscado(u.getPersona().getNumSegSocial());
->>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         return "Diagnostico";
     }
     
     public String doTratar(Cita c){
-<<<<<<< HEAD
-=======
         login.setBuscado(c.getPersona().getNumSegSocial());
->>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         return "tratamiento";
     }
     
     public String doTratarUrgencia(Urgencia u){
-<<<<<<< HEAD
-=======
         login.setBuscado(u.getPersona().getNumSegSocial());
->>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         trabajos.avanzaTratamiento(u);
         return "tratamiento";
     }

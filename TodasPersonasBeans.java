@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -29,13 +30,8 @@ public class TodasPersonasBeans {
     private List<Persona> personasFiltradas= new ArrayList<>();
     @Inject
     private PersonaEjb personaEjb;
-
-<<<<<<< HEAD
-=======
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
-    
->>>>>>> f506675ce1630e2811cce1d88979f921608834b3
     public TodasPersonasBeans() {
         
     }

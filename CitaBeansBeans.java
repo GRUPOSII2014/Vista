@@ -7,16 +7,15 @@ package Vista;
 
 import Ejb.CrearCitaEjb;
 import Ejb.IngresoEjb;
+import Ejb.PersonaEjb;
 import Entidades.Cita;
-import Entidades.Enfermero;
-import Entidades.Enumerados;
 import Entidades.Medico;
 import Entidades.Persona;
 import Entidades.Trabajador;
 import Entidades.Urgencia;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -37,8 +36,10 @@ public class CitaBeansBeans {
     private Urgencia urgencia;
     private Integer nss;
     
-    @Inject
+    @EJB
     private IngresoEjb ejb;
+    @EJB
+    private PersonaEjb pers;
     @Inject
     private CrearCitaEjb ejbCita;
 
@@ -123,7 +124,7 @@ public class CitaBeansBeans {
          horas = new ArrayList<>();
          horas.add("primera");
          horas.add("segunda");*/
-        persona = ejb.getPersona(getPersona().getNumSegSocial());
+        persona = pers.getPersona(getPersona().getNumSegSocial());
         return "null";
     }
 

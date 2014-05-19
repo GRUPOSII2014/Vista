@@ -268,7 +268,4 @@ public class DiagnosticoBeans {
         return p1.getHistoriaclinica();
         
     }
-    
-    public int
-    
 }
