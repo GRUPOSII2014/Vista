@@ -91,7 +91,7 @@ public class EventosBean {
     }
     public String creacion(){
          System.out.println(this.alerta.getAsunto());
-        return "medico.xhtml";
+        return "gestionalertas.xhtml";
        
     }
     
