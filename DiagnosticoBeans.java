@@ -40,6 +40,8 @@ public class DiagnosticoBeans {
     private Informe informe=new Informe();
     private int var;
     private HistoriaClinica historia = inicHist();
+    private List<Informe> informes;
+   
   
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
@@ -266,9 +268,28 @@ public class DiagnosticoBeans {
     
     public HistoriaClinica inicHist(){
         return p1.getHistoriaclinica();
-        
+              
+    }
+
+    public PersonaEjb getPers() {
+        return pers;
+    }
+
+    public void setPers(PersonaEjb pers) {
+        this.pers = pers;
+    }
+
+    public List<Informe> getInformes() {
+        for(Informe e : p1.getHistoriaclinica().getInformes()){
+            informes.add(e);  
+        }
+        return  informes;
+    }
+
+    public void setInformes(List<Informe> informes) {
+        this.informes = informes;
     }
     
-    public int
+    
     
 }
