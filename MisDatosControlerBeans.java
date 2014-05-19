@@ -6,8 +6,11 @@
 
 package Vista;
 
+import Ejb.PersonaEjb;
 import Entidades.Persona;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -18,6 +21,10 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class MisDatosControlerBeans {
     public Persona persona=inic();
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController login;
+    @EJB
+    private PersonaEjb ejb;
     /**
      * Creates a new instance of PrincipalPacienteBean
      */
@@ -27,7 +34,8 @@ public class MisDatosControlerBeans {
     }
     
     private Persona inic(){
-        Persona p1 = new Persona();
+        Persona p1;
+        /*
         p1.setDNI("45355678f");
         p1.setNumSegSocial(444457);
         p1.setNombre("juanito");
@@ -42,7 +50,8 @@ public class MisDatosControlerBeans {
         p1.setCiudad("Jaen");
         p1.setPais("España");
         p1.setSexo("V");
-        
+        */
+        p1=ejb.getPersona(login.getBuscado());
         return p1;
     }
     public Persona getPersona() {
@@ -58,6 +67,14 @@ public class MisDatosControlerBeans {
     public String doChanges(){
         //Implementar
         return "MisDatos";
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
     }
     
 }

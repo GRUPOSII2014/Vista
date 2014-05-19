@@ -28,7 +28,7 @@ public class CambiarClaveBeans {
     private PersonaEjb ejb;
 
     @ManagedProperty(value = "#{loginController}")
-    private LoginController session;
+    private LoginController login;
 
     /**
      * Creates a new instance of CambiarClave
@@ -61,7 +61,7 @@ public class CambiarClaveBeans {
     }
 
     public void doCambiarClave(ActionEvent actionEvent) {
-        Persona p = ejb.getPersona(session.getBuscado());
+        Persona p = ejb.getPersona(login.getBuscado());
         FacesContext context = FacesContext.getCurrentInstance();
         if(p.getPassword().equals(actual)){
             if (nueva.equalsIgnoreCase(nueva2)) {
@@ -74,4 +74,21 @@ public class CambiarClaveBeans {
         }
     }
 
+    public PersonaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(PersonaEjb ejb) {
+        this.ejb = ejb;
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+
+    
 }

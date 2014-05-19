@@ -23,10 +23,10 @@ import javax.inject.Inject;
 public class HistoriaBean {
 
     private Informe informe = null;
-    private HistoriaClinica historia;
+    private HistoriaClinica historia = null;
     
     @ManagedProperty(value = "#{loginController}")
-    private LoginController session;
+    private LoginController login;
     @Inject
     private PersonaEjb ejb;
 
@@ -87,7 +87,8 @@ public class HistoriaBean {
     }
 
     public HistoriaClinica getHistoria() {
-        historia = ejb.getHistoria(session.getBuscado());
+        if(historia == null)
+            historia = ejb.getHistoria(login.getBuscado());
         return historia;
     }
 
@@ -128,12 +129,20 @@ public class HistoriaBean {
         }
     }
 
-    public LoginController getSession() {
-        return session;
+    public LoginController getLogin() {
+        return login;
     }
 
-    public void setSession(LoginController session) {
-        this.session = session;
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+
+    public PersonaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(PersonaEjb ejb) {
+        this.ejb = ejb;
     }
     
 }
