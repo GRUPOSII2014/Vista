@@ -30,6 +30,12 @@ public class TodasPersonasBeans {
     @Inject
     private PersonaEjb personaEjb;
 
+<<<<<<< HEAD
+=======
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController login;
+    
+>>>>>>> f506675ce1630e2811cce1d88979f921608834b3
     public TodasPersonasBeans() {
         
     }
@@ -78,11 +84,9 @@ public class TodasPersonasBeans {
          
         return ((Comparable) value).compareTo(Integer.valueOf(filterText)) >= 0;
     }
-    public String verPersona(Persona p){
-        return "null";
-    }
     public String editarPersona(Persona p){
-        return "null";
+        login.setBuscado(p.getNumSegSocial());
+        return "MisDatos.xhtml";
     }
     public String eliminarPersona(Persona p){
         return "null";
@@ -91,4 +95,21 @@ public class TodasPersonasBeans {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Accion",  "Se ha eliminado una persona");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    public PersonaEjb getPersonaEjb() {
+        return personaEjb;
+    }
+
+    public void setPersonaEjb(PersonaEjb personaEjb) {
+        this.personaEjb = personaEjb;
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+    
 }

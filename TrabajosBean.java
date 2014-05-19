@@ -10,6 +10,7 @@ import Ejb.CitaEjb;
 import Entidades.Cita;
 import Entidades.Urgencia;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
@@ -23,8 +24,16 @@ import javax.inject.Inject;
 public class TrabajosBean {
 
     private Urgencia urge;
-    @Inject
+    @EJB
     private CitaEjb trabajos;
+<<<<<<< HEAD
+=======
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController login;
+    
+    //@ManagedProperty(value = "#{loginController}")
+    //private LoginController session;
+>>>>>>> f506675ce1630e2811cce1d88979f921608834b3
 
     /**
      * Creates a new instance of CitasBean
@@ -93,29 +102,63 @@ public class TrabajosBean {
         this.urge = urge;
     }
 
-    public List<Cita> getCitas(String nss) {
+    public List<Cita> listadoCitas(Integer nss) {
         return trabajos.citasNoAtendidas(nss);
     }
 
-    public List<Urgencia> getUrgencias(String nss) {
+    public List<Urgencia> listadoUrgencias(Integer nss) {
         return trabajos.urgenciasEspera(nss);
     }
     
     public String doDiagnostico(Cita cita){
+<<<<<<< HEAD
+=======
+        login.setBuscado(cita.getPersona().getNumSegSocial());
+>>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         return "Diagnostico";
     }
     
     public String doDiagnosticoUrgencia(Urgencia u){
         trabajos.avanzaAtendiendo(u);
+<<<<<<< HEAD
+=======
+        login.setBuscado(u.getPersona().getNumSegSocial());
+>>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         return "Diagnostico";
     }
     
     public String doTratar(Cita c){
+<<<<<<< HEAD
+=======
+        login.setBuscado(c.getPersona().getNumSegSocial());
+>>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         return "tratamiento";
     }
     
     public String doTratarUrgencia(Urgencia u){
+<<<<<<< HEAD
+=======
+        login.setBuscado(u.getPersona().getNumSegSocial());
+>>>>>>> f506675ce1630e2811cce1d88979f921608834b3
         trabajos.avanzaTratamiento(u);
         return "tratamiento";
     }
+
+    public CitaEjb getTrabajos() {
+        return trabajos;
+    }
+
+    public void setTrabajos(CitaEjb trabajos) {
+        this.trabajos = trabajos;
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+    
+    
 }

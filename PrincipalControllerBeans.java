@@ -27,48 +27,65 @@ public class PrincipalControllerBeans {
     private PersonaEjb persona;
 
     @ManagedProperty(value = "#{loginController}")
-    private LoginController session;
+    private LoginController login;
 
     public PrincipalControllerBeans() {
     }
 
     public Persona getPersona() {
-        return persona.getPersona(session.getNss());
+        return persona.getPersona(login.getNss());
     }
 
     public String verMiHistoria(Integer nss) {
-        session.setBuscado(nss);
+        login.setBuscado(nss);
         return "HistoriaClinica.xhtml";
     }
 
     public LoginController getSession() {
-        return session;
+        return login;
     }
 
     public void setSession(LoginController session) {
-        this.session = session;
+        this.login = session;
     }
 
     public String verMiTrabajo(Integer nss) {
-        session.setBuscado(nss);
+        login.setBuscado(nss);
         return "Trabajo.xhtml";
     }
 
     public String verMisCitas(Integer nss) {
-        session.setBuscado(nss);
+        login.setBuscado(nss);
         return "citas.xhtml";
     }
 
     public List<Alerta> getAlertas() {
-        return persona.allAlertas(session.getNss());
+        return persona.allAlertas(login.getNss());
     }
 
     public String cambiaPass(Integer nss) {
-        session.setBuscado(nss);
+        login.setBuscado(nss);
         return "Cambiarclave.xhtml";
     }
 
     public List<Mensaje> getMensajes() {
-        return persona.allMensajes(session.getNss());
+        return persona.allMensajes(login.getNss());
     }
+    public String verMisDatos(){
+        login.setBuscado(login.getNss());
+        return "MisDatos.xhtml";
+    }
+
+    public void setPersona(PersonaEjb persona) {
+        this.persona = persona;
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+    
 }

@@ -28,7 +28,7 @@ public class CambiarClaveBeans {
     private PersonaEjb ejb;
 
     @ManagedProperty(value = "#{loginController}")
-    private LoginController session;
+    private LoginController login;
 
     /**
      * Creates a new instance of CambiarClave
@@ -61,11 +61,13 @@ public class CambiarClaveBeans {
     }
 
     public void doCambiarClave(ActionEvent actionEvent) {
-        Persona p = ejb.getPersona(session.getBuscado());
+        Persona p = ejb.getPersona(login.getNss());
         FacesContext context = FacesContext.getCurrentInstance();
         if(p.getPassword().equals(actual)){
-            if (nueva.equalsIgnoreCase(nueva2)) {
+            if (nueva.equals(nueva2)) {
                 context.addMessage(null, new FacesMessage("Exito", "Se ha cambiado la clave correctamente"));
+                p.setPassword(nueva);
+                ejb.actualizaPersona(p);
             } else {
                 context.addMessage(null, new FacesMessage("Error", "Las contraseñas no coinciden"));
             }
@@ -74,4 +76,21 @@ public class CambiarClaveBeans {
         }
     }
 
+    public PersonaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(PersonaEjb ejb) {
+        this.ejb = ejb;
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+
+    
 }

@@ -6,18 +6,26 @@
 
 package Vista;
 
+import Ejb.PersonaEjb;
+import Entidades.Horario;
 import Entidades.Persona;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author PyRoS
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class MisDatosControlerBeans {
     public Persona persona=inic();
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController login;
+    @EJB
+    private PersonaEjb ejb;
     /**
      * Creates a new instance of PrincipalPacienteBean
      */
@@ -27,24 +35,11 @@ public class MisDatosControlerBeans {
     }
     
     private Persona inic(){
-        Persona p1 = new Persona();
-        p1.setDNI("45355678f");
-        p1.setNumSegSocial(444457);
-        p1.setNombre("juanito");
-        p1.setApellido1("claverias");
-        p1.setApellido2("gonzalez");
-        p1.setEmail("persona1@h.com");
-        p1.setEstadoCivil("soltero");
-        p1.setTelefono("988544346");
-        p1.setDireccion("callemarmoles");
-        p1.setCodigoPostal(13335);
-        p1.setPassword("hola");
-        p1.setCiudad("Jaen");
-        p1.setPais("España");
-        p1.setSexo("V");
-        
+        Persona p1;
+        p1=ejb.getPersona(login.getBuscado());
         return p1;
     }
+    
     public Persona getPersona() {
         return persona;
     }
@@ -52,12 +47,25 @@ public class MisDatosControlerBeans {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    public String goHistoriaClinica(){
-        return "HistoriaClinica.xhtml";
-    }
+    
     public String doChanges(){
-        //Implementar
-        return "MisDatos";
+        ejb.actualizaPersona(persona);
+        return "MisDatos.xhtml";
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
     }
     
+    public String horarioMedicoCabecera(){
+        StringBuilder sb = new StringBuilder();
+        for (Horario h : persona.getMedicoCabecera().getHorarios()){
+            sb.append(h.getDia()+", ");
+        }
+        return sb.toString().substring(0,sb.length()-2)+".";
+    }
 }
