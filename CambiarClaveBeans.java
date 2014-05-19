@@ -61,11 +61,13 @@ public class CambiarClaveBeans {
     }
 
     public void doCambiarClave(ActionEvent actionEvent) {
-        Persona p = ejb.getPersona(login.getBuscado());
+        Persona p = ejb.getPersona(login.getNss());
         FacesContext context = FacesContext.getCurrentInstance();
         if(p.getPassword().equals(actual)){
-            if (nueva.equalsIgnoreCase(nueva2)) {
+            if (nueva.equals(nueva2)) {
                 context.addMessage(null, new FacesMessage("Exito", "Se ha cambiado la clave correctamente"));
+                p.setPassword(nueva);
+                ejb.actualizaPersona(p);
             } else {
                 context.addMessage(null, new FacesMessage("Error", "Las contraseñas no coinciden"));
             }

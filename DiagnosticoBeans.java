@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Ejb.PersonaEjb;
 import Entidades.Cantidad;
 import Entidades.Enumerados;
 import Entidades.HistoriaClinica;
@@ -15,7 +16,9 @@ import Entidades.Persona;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -26,7 +29,9 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class DiagnosticoBeans {
 
-    private Persona p1;
+    private Persona p1 = inic();
+    @EJB
+    private PersonaEjb pers;
     private List<Medicamento> medicamentos;
     private int seleccionado;
     private float cantidad;
@@ -34,8 +39,10 @@ public class DiagnosticoBeans {
     private List<Cantidad> tratamientos=new ArrayList<>();
     private Informe informe=new Informe();
     private int var;
-    private HistoriaClinica historia = new HistoriaClinica();
+    private HistoriaClinica historia = inicHist();
   
+    @ManagedProperty(value = "#{loginController}")
+    private LoginController login;
     
     public DiagnosticoBeans() {
 
@@ -233,4 +240,35 @@ public class DiagnosticoBeans {
     public String verHistoria(){
         return "HistoriaClinica";
     }
+
+    public HistoriaClinica getHistoria() {
+        return historia;
+    }
+
+    public void setHistoria(HistoriaClinica historia) {
+        this.historia = historia;
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+    
+    public Persona inic(){
+        
+        Persona p = pers.getPersona(login.getBuscado());
+        return p;
+        
+    }
+    
+    public HistoriaClinica inicHist(){
+        return p1.getHistoriaclinica();
+        
+    }
+    
+    public int
+    
 }
