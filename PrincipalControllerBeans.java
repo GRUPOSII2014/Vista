@@ -75,4 +75,17 @@ public class PrincipalControllerBeans {
         login.setBuscado(login.getNss());
         return "MisDatos.xhtml";
     }
+
+    public void setPersona(PersonaEjb persona) {
+        this.persona = persona;
+    }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+    
 }
