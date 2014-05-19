@@ -9,6 +9,8 @@ import Ejb.PersonaEjb;
 import Entidades.Alerta;
 import Entidades.Mensaje;
 import Entidades.Persona;
+import Entidades.Trabajador;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +24,8 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class PrincipalControllerBeans {
+    
+    private String consulta, mensaje;
 
     @EJB
     private PersonaEjb persona;
@@ -87,5 +91,42 @@ public class PrincipalControllerBeans {
     public void setLogin(LoginController login) {
         this.login = login;
     }
+
+    public String getConsulta() {
+        return consulta;
+    }
+
+    public void setConsulta(String consulta) {
+        this.consulta = consulta;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
     
+    public String enviaMensaje() {
+        Trabajador from, to;
+        
+        from = persona.getTrabajador(login.getNss());
+        to = persona.getTrabajador(consulta);
+        
+        Mensaje m = new Mensaje();
+        m.setAsunto("");
+        m.setFecha(new Date());
+        m.setFrom(from);
+        m.setTo(to);
+        m.setMensaje(mensaje);
+        
+        persona.setMensaje(m);
+        
+        return null;
+    }
+    
+    public List<String> getTrabajadores(String query) {
+        return persona.getTrabajadores(query);
+    }
 }
