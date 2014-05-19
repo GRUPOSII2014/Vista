@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import Ejb.PersonaEjb;
 
 /**
  *
@@ -21,7 +22,7 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class PersonaBeans {
     private Persona p=new Persona();
-
+    private PersonaEjb ejb;
     public PersonaBeans(){
        
     }
@@ -29,11 +30,12 @@ public class PersonaBeans {
     public Persona getP() {
         return p;
     }
-
+    
     public void setP(Persona p) {
         this.p = p;
     }
     public void crear(ActionEvent actionEvent){
+        ejb.crearPersona(p);
         FacesContext context = FacesContext.getCurrentInstance();  
         context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada correctamente"));
     }

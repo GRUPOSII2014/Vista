@@ -6,11 +6,12 @@
 package Vista;
 
 import Ejb.IngresoEjb;
+import Ejb.PersonaEjb;
 import Entidades.Cama;
 import Entidades.Persona;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 
 /**
  *
@@ -23,8 +24,10 @@ public class IngresoBeans {
     private Cama cama;
     public Persona persona;
     
-    @Inject
+    @EJB
     private IngresoEjb ejb;
+    @EJB
+    private PersonaEjb pers;
 
     public IngresoBeans() {
         /*ArrayList<Cama> camas = new ArrayList<>();
@@ -54,7 +57,7 @@ public class IngresoBeans {
     }
     
     public String buscaPersona(){
-        persona = ejb.getPersona(persona.getNumSegSocial());
+        persona = pers.getPersona(persona.getNumSegSocial());
         return "null";
         
     }

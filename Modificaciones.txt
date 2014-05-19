@@ -4,4 +4,3 @@ Fecha nacimiento en Persona.
 Arregladas Relaciones de hospital-planta-habitaciones-cama.
 Plantilla Reparadas.
 Añadida Vista Para ver todas las personas.
-Añadida clase para los formularios, ademas de rehacer la vista y la bean.

@@ -5,17 +5,17 @@
  */
 package Vista;
 
+import Ejb.CrearCitaEjb;
 import Ejb.IngresoEjb;
+import Ejb.PersonaEjb;
 import Entidades.Cita;
-import Entidades.Enfermero;
-import Entidades.Enumerados;
 import Entidades.Medico;
 import Entidades.Persona;
 import Entidades.Trabajador;
 import Entidades.Urgencia;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -27,17 +27,27 @@ import javax.inject.Inject;
 @ManagedBean
 @ViewScoped
 public class CitaBeansBeans {
-
+    
     private Cita cita;
     private Persona persona;
     private List<Medico> medicosCabecera;
     private List<Integer> horas;
     private Trabajador trabajador;
     private Urgencia urgencia;
-
-    @Inject
+    private Integer nss;
+    
+    @EJB
     private IngresoEjb ejb;
+    @EJB
+    private PersonaEjb pers;
+    @Inject
+    private CrearCitaEjb ejbCita;
 
+    
+    public Persona buscarPersona(){
+        persona= ejbCita.buscarPersona(nss);
+        return null;
+    }
     public CitaBeansBeans() {
         /*medicosCabecera = new ArrayList<>();
          horas = null;
@@ -114,7 +124,7 @@ public class CitaBeansBeans {
          horas = new ArrayList<>();
          horas.add("primera");
          horas.add("segunda");*/
-        persona = ejb.getPersona(persona.getNumSegSocial());
+        persona = pers.getPersona(getPersona().getNumSegSocial());
         return "null";
     }
 
@@ -167,7 +177,21 @@ public class CitaBeansBeans {
     }
 
     public String crearCita() {
-        ejb.crearCita(persona, cita);
+        ejb.crearCita(getPersona(), cita);
         return null;
+    }
+
+    /**
+     * @return the nss
+     */
+    public Integer getNss() {
+        return nss;
+    }
+
+    /**
+     * @param nss the nss to set
+     */
+    public void setNss(Integer nss) {
+        this.nss = nss;
     }
 }

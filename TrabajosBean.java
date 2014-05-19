@@ -14,7 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
+import javax.ws.rs.HEAD;
 
 /**
  *
@@ -29,9 +29,6 @@ public class TrabajosBean {
     private CitaEjb trabajos;
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
-    
-    //@ManagedProperty(value = "#{loginController}")
-    //private LoginController session;
 
     /**
      * Creates a new instance of CitasBean

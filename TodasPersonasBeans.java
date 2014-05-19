@@ -30,10 +30,8 @@ public class TodasPersonasBeans {
     private List<Persona> personasFiltradas= new ArrayList<>();
     @Inject
     private PersonaEjb personaEjb;
-
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
-    
     public TodasPersonasBeans() {
         
     }
