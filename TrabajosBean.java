@@ -14,7 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.ws.rs.HEAD;
+import javax.inject.Inject;
 
 /**
  *
@@ -29,6 +29,9 @@ public class TrabajosBean {
     private CitaEjb trabajos;
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
+    
+    //@ManagedProperty(value = "#{loginController}")
+    //private LoginController session;
 
     /**
      * Creates a new instance of CitasBean
@@ -98,11 +101,13 @@ public class TrabajosBean {
     }
 
     public List<Cita> listadoCitas(Integer nss) {
-        return trabajos.citasNoAtendidas(nss);
+        //return trabajos.citasNoAtendidas(nss);
+        return null;
     }
 
     public List<Urgencia> listadoUrgencias(Integer nss) {
-        return trabajos.urgenciasEspera(nss);
+        //return trabajos.urgenciasEspera(nss);
+        return null;
     }
     
     public String doDiagnostico(Cita cita){
@@ -111,7 +116,7 @@ public class TrabajosBean {
     }
     
     public String doDiagnosticoUrgencia(Urgencia u){
-        trabajos.avanzaAtendiendo(u);
+        //trabajos.avanzaAtendiendo(u);
         login.setBuscado(u.getPersona().getNumSegSocial());
         return "Diagnostico";
     }
@@ -123,7 +128,7 @@ public class TrabajosBean {
     
     public String doTratarUrgencia(Urgencia u){
         login.setBuscado(u.getPersona().getNumSegSocial());
-        trabajos.avanzaTratamiento(u);
+        //trabajos.avanzaTratamiento(u);
         return "tratamiento";
     }
 
