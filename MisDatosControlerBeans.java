@@ -21,7 +21,7 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class MisDatosControlerBeans {
-    public Persona persona=inic();
+    private Persona persona;
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
     @EJB
@@ -34,10 +34,9 @@ public class MisDatosControlerBeans {
         
     }
     
-    private Persona inic(){
-        Persona p1;
-        p1=ejb.getPersona(login.getBuscado());
-        return p1;
+    public String inic(){
+        persona=ejb.getPersona(login.getBuscado());
+        return "Inic";
     }
     
     public Persona getPersona() {
@@ -63,9 +62,23 @@ public class MisDatosControlerBeans {
     
     public String horarioMedicoCabecera(){
         StringBuilder sb = new StringBuilder();
-        for (Horario h : persona.getMedicoCabecera().getHorarios()){
-            sb.append(h.getDia()+", ");
+        if(persona.getMedicoCabecera()!=null){
+            for (Horario h : persona.getMedicoCabecera().getHorarios()){
+                sb.append(h.getDia()+", ");
+            }
+            return sb.toString().substring(0,sb.length()-2)+".";
+        }else{
+            return "";
         }
-        return sb.toString().substring(0,sb.length()-2)+".";
+        
     }
+
+    public PersonaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(PersonaEjb ejb) {
+        this.ejb = ejb;
+    }
+    
 }
