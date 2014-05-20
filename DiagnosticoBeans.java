@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Ejb.DiagnosticoEjb;
 import Ejb.MedicamentosEjb;
 import Ejb.PersonaEjb;
 import Entidades.Cantidad;
@@ -15,8 +16,8 @@ import Entidades.Medicamento;
 import Entidades.Medico;
 import Entidades.Persona;
 import Entidades.Tratamiento;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -38,24 +39,8 @@ public class DiagnosticoBeans {
     private List<Cantidad> tratamientos=new ArrayList<>();
     private Informe informe=new Informe();
     private int var;
-    private Tratamiento trata = new Tratamiento();
-
-    public Tratamiento getTrata() {
-        return trata;
-    }
-
-    public void setTrata(Tratamiento trata) {
-        this.trata = trata;
-    }
-
-    public MedicamentosEjb getMedic() {
-        return medic;
-    }
-
-    public void setMedic(MedicamentosEjb medic) {
-        this.medic = medic;
-    }
-    
+    private String var2;
+    private int var3;
     private HistoriaClinica historia;
     private List<Informe> informes = new ArrayList<>();
     private Persona p1;
@@ -65,6 +50,9 @@ public class DiagnosticoBeans {
     
     @EJB
     private MedicamentosEjb medic;
+    
+    @EJB
+    private DiagnosticoEjb diag;
    
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
@@ -156,11 +144,35 @@ public class DiagnosticoBeans {
     }
     
     public String terminarDiagnostico(){
-        login.setBuscado(login.getNss());
+        //login.setBuscado(login.getNss()); //paciente
+        Medico me = new Medico();
+        me.setNumSegSocial(login.getNss());
+        login.setBuscado(2);
+        trata.setTipo(Enumerados.tipoTratamiento.valueOf(var2));
+        trata.setPersona(p1);
+        diag.creaTratamiento(trata);
+        informe.setTratamiento(trata);
+        informe.setMedico(me);
+        informe.setFecha(Calendar.getInstance().getTime());
+        informe.setTipo(Enumerados.tipoInforme.DIAGNOSTICO);       
         
-        
-        
+        if(var==0){
+            diag.anadeInf(informe);
+        }else{
+            List<Informe> segundasopiniones = new ArrayList<>();
+            segundasopiniones.add(informe);
+            informe.setSegundasOpiniones(segundasopiniones);
+            diag.anadeSegOp(informe);
+        } 
         return "Trabajo.xhtml";
+    }
+
+    public int getVar3() {
+        return var3;
+    }
+
+    public void setVar3(int var3) {
+        this.var3 = var3;
     }
     
     public String eliminar(int id){
@@ -179,10 +191,8 @@ public class DiagnosticoBeans {
     
     public String anadirTratamiento(){
         Cantidad c = new Cantidad();
-     
         c.setCantidad(cantidad);
-        
-        c.setMedicamento(medic.getMedicamento().get(var-1));
+        c.setMedicamento(medic.getMedicamento().get(var3-1));
         tratamientos.add(c);
         return "null";
     }
@@ -225,5 +235,41 @@ public class DiagnosticoBeans {
     public void setInformes(List<Informe> informes) {
         this.informes = informes;
     }
+    
+    
+     public String getVar2() {
+        return var2;
+    }
+
+    public void setVar2(String var2) {
+        this.var2 = var2;
+    }
+    private Tratamiento trata = new Tratamiento();
+
+    public Tratamiento getTrata() {
+        return trata;
+    }
+
+    public void setTrata(Tratamiento trata) {
+        this.trata = trata;
+    }
+
+    public MedicamentosEjb getMedic() {
+        return medic;
+    }
+
+    public void setMedic(MedicamentosEjb medic) {
+        this.medic = medic;
+    }
+
+    public DiagnosticoEjb getDiag() {
+        return diag;
+    }
+
+    public void setDiag(DiagnosticoEjb diag) {
+        this.diag = diag;
+    }
+    
+    
 }
 

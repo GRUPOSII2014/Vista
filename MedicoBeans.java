@@ -8,15 +8,10 @@ package Vista;
 
 
 import Ejb.PersonaEjb;
-import Entidades.Departamento;
-import Entidades.Enumerados;
-import Entidades.Especialidad;
-import Entidades.HistoriaClinica;
-import Entidades.Hospital;
 import Entidades.Medico;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -32,99 +27,48 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name="MedicoBean")
 @RequestScoped
 public class MedicoBeans {
+    @EJB
     private PersonaEjb ejb;
     private Medico m;
+    private int horaEntrada;
+    private int horaSalida;
+    private List<Integer> horas = new ArrayList<>();
     
     public MedicoBeans(){
-
-       /*
-        especialidad = new Especialidad();
- especialidad = new Especialidad();
- 2f9941b9c079632056d86368f3e21fb3924d71a2
-        especialidad.setNombre("Oftalmología");
-        especialidad.setDescripcion("Especialidad para el tratamiento de los ojos");
-        especialidades.add(especialidad);
-        
-        hospital = new Hospital();
-        hospital.setId(123);
-        hospital.setNombre("Carlos Haya");
-        hospital.setDireccion("Avenida Carlos de Haya");
-        hospital.setCodigoPostal(29009);
-        hospital.setCiudad("Malaga");
-        Date ap = new Date ();
-        Date ci = new Date ();
-        hospital.setHoraApertura(ap);
-        hospital.setHoraCierre(ci);
-        
-        departamento = new Departamento();
-        departamento.setId(11111111);
-        departamento.setNombre("Oftalmología");
-        departamento.setDescripcion("Departamento dedicado a la oftalmología");
-        departamento.setActivo(true);
-        
-        medico = new Medico();
-        medico.setPassword("micontraseña");
-        medico.setEmail("alberto@gmail.com");
-        medico.setNombre("Alberto");
-        medico.setApellido1("Sanchez");
-        medico.setApellido2("Muñoz");
-        medico.setDNI("23232314h");
-        medico.setNumSegSocial(1);
-        medico.setEstadoCivil("Casado");
-        medico.setPais("España");
-        medico.setCiudad("Malaga");
-        medico.setCodigoPostal(29009);
-        medico.setDireccion("Calle Pepito");
-        medico.setTelefono("954321123");
-        medico.setActivo(true);
-        medico.setSexo("V");
-        medico.setTipo(Enumerados.tipoTrabajador.MEDICO);
-        medico.setSalario(s);
-        medico.setDespacho("3.3.3");
-        medico.setPrecioHora(e);
-        medico.setMedicoCabecera(medicoc);
-        medico.setEspecialidad(especialidades);
-        medico.setDepartamento(departamento);
-        
-        hi = new HistoriaClinica();
-
-        Date fechanac = new Date();
-        hi.setFechaNacimiento(fechanac);
-        hi.setGrupoSanguineo("0+");
-        hi.setObservaciones("Aqui se muestra las observaciones de la historia clinica");
-        hi.setInformes(null);
-        
-        medicoc = new Medico();       
-        medicoc.setNombre("Pepe");
-        medicoc.setApellido1("Leiva");
-        medicoc.setApellido2("Valverde");
-        medicoc.setDNI("23444314h");
-        medicoc.setNumSegSocial(2);
-        medicoc.setEstadoCivil("Soltero");
-        medicoc.setPais("España");
-        medicoc.setCiudad("Malaga");
-        medicoc.setCodigoPostal(29009);
-        medicoc.setDireccion("Calle Luis");
-        medicoc.setTelefono("954322123");
-        medicoc.setActivo(true);
-        medicoc.setSexo("V");
-        medicoc.setTipo(Enumerados.tipoTrabajador.MEDICO);
-        medicoc.setSalario(s);
-        medicoc.setDespacho("3.3.2");
-        medicoc.setPrecioHora(e);
-<<<<<<< HEAD
-        medicoc.setMedicoCabecera(medico);   
-        medicoc.setMedicoCabecera(medico);  
-               */
+        for (int i = 0; i< 24 ;i++)
+            horas.add(i);
     }
 
+    public PersonaEjb getEjb() {
+        return ejb;
+    }
 
-    /**
-     * @return the m
-     */
-    public String crearMedico (){
-        ejb.crearMedico(m);
-        return null;
+    public void setEjb(PersonaEjb ejb) {
+        this.ejb = ejb;
+    }
+
+    public int getHoraEntrada() {
+        return horaEntrada;
+    }
+
+    public void setHoraEntrada(int horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public int getHoraSalida() {
+        return horaSalida;
+    }
+
+    public void setHoraSalida(int horaSalida) {
+        this.horaSalida = horaSalida;
+    }
+
+    public List<Integer> getHoras() {
+        return horas;
+    }
+
+    public void setHoras(List<Integer> horas) {
+        this.horas = horas;
     }
     
     public Medico getM() {
@@ -138,11 +82,19 @@ public class MedicoBeans {
         this.m = m;
     }
 
-    /*
+    
      public void crear(ActionEvent actionEvent){
-        ejb.crearPersona(p);
-        FacesContext context = FacesContext.getCurrentInstance();  
-        context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada correctamente"));
+       PersonaEjb.Error error = ejb.compruebaMedico(m);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(error.equals(PersonaEjb.Error.DNI_REPETIDO)){
+            context.addMessage(null, new FacesMessage("Error", "El dni ya se encuentra en la base de datos"));
+        }else if (error.equals(PersonaEjb.Error.CORREO_REPETIDO)){
+            context.addMessage(null, new FacesMessage("Error", "El email ya se encuentra en la base de datos"));
+        }else if (error.equals(PersonaEjb.Error.NSS_REPETIDO)){
+            context.addMessage(null, new FacesMessage("Error", "El numero de seguridad social ya se encuentra en la base de datos"));
+        }else{
+            context.addMessage(null, new FacesMessage("Exito", "Persona Creada corectamente"));
+        }
     }
-    */
+    
 }
