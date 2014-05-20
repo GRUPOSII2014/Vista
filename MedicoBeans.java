@@ -38,7 +38,7 @@ public class MedicoBeans {
     List<Especialidad> especialidades = new ArrayList<Especialidad>();
    
     public MedicoBeans(){
-        especialidad = new Especialidad();
+       /* especialidad = new Especialidad();
         especialidad.setNombre("Oftalmología");
         especialidad.setDescripcion("Especialidad para el tratamiento de los ojos");
         especialidades.add(especialidad);
@@ -110,7 +110,8 @@ public class MedicoBeans {
         medicoc.setSalario(s);
         medicoc.setDespacho("3.3.2");
         medicoc.setPrecioHora(e);
-        medicoc.setMedicoCabecera(medico);    
+        medicoc.setMedicoCabecera(medico);  
+               */
     }
 
     public Medico getMedico() {
