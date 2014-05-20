@@ -6,8 +6,16 @@
 
 package Vista;
 
+import Ejb.PersonaEjb;
+import Entidades.TrabajadoresHospital;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -16,20 +24,51 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class AdminBean {
-    private Entidades.Admin adm;
+    private Entidades.TrabajadoresHospital adm;
+    @EJB
     private Ejb.PersonaEjb ejb;
+    private int horaEntrada;
+    private int horaSalida;
+    private List<Integer> horas = new ArrayList<>();
+    
+    public AdminBean(){
+        for (int i = 0; i< 24 ;i++)
+            horas.add(i);
+    }
 
+    public int getHoraEntrada() {
+        return horaEntrada;
+    }
+
+    public void setHoraEntrada(int horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public int getHoraSalida() {
+        return horaSalida;
+    }
+
+    public void setHoraSalida(int horaSalida) {
+        this.horaSalida = horaSalida;
+    }
+
+    public List<Integer> getHoras() {
+        return horas;
+    }
+
+    public void setHoras(List<Integer> horas) {
+        this.horas = horas;
+    }
+
+    
     /**
      * @return the adm
      */
-    public Entidades.Admin getAdm() {
+    public TrabajadoresHospital getAdm() {    
         return adm;
     }
 
-    /**
-     * @param adm the adm to set
-     */
-    public void setAdm(Entidades.Admin adm) {
+    public void setAdm(TrabajadoresHospital adm) {
         this.adm = adm;
     }
 
@@ -47,9 +86,18 @@ public class AdminBean {
         this.ejb = ejb;
     }
     
-    public String crearAdmin(){
-        ejb.crearAdministrativo(adm);
-        return null;
+    public void crear(ActionEvent actionEvent){
+       PersonaEjb.Error error = ejb.compruebaAdministrativo(adm);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(error.equals(PersonaEjb.Error.DNI_REPETIDO)){
+            context.addMessage(null, new FacesMessage("Error", "El dni ya se encuentra en la base de datos"));
+        }else if (error.equals(PersonaEjb.Error.CORREO_REPETIDO)){
+            context.addMessage(null, new FacesMessage("Error", "El email ya se encuentra en la base de datos"));
+        }else if (error.equals(PersonaEjb.Error.NSS_REPETIDO)){
+            context.addMessage(null, new FacesMessage("Error", "El numero de seguridad social ya se encuentra en la base de datos"));
+        }else{
+            context.addMessage(null, new FacesMessage("Exito", "Persona Creada corectamente"));
+        }
     }
     
     

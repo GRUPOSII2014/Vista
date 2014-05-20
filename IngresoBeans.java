@@ -66,7 +66,7 @@ public class IngresoBeans {
     
     public String asignarCama(){
         ejb.asignarCama(persona, cama);
-        return "principal.xhtml";
+        return null;
     }
     
     public String buscaPersona(){
