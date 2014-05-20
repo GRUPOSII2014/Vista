@@ -31,11 +31,14 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class CitaBeansBeans {
 
-    private Urgencia urgencia;
     private Persona persona;
+    private Medico medicoBuscado;
+    private List<Medico> medicosCabecera;
+    
+    private Urgencia urgencia;
     private Integer nss;
     private String tipocita;
-    private List<Medico> medicosCabecera;
+    
     private List<Date> horas;
     private List<String> tiposCita;
     private String dias;
@@ -47,6 +50,7 @@ public class CitaBeansBeans {
     private PersonaEjb ejb;
     @EJB
     private IngresoEjb ejb1;
+    
 
     public CitaBeansBeans() {
         
@@ -66,6 +70,40 @@ public class CitaBeansBeans {
         enfermeros = ejb.todosEnfermeros();
         return "Inic";
     }
+
+    public Medico getMedicoBuscado() {
+        return medicoBuscado;
+    }
+
+    public void setMedicoBuscado(Medico medicoBuscado) {
+        this.medicoBuscado = medicoBuscado;
+    }
+
+    public Cita getCita() {
+        return cita;
+    }
+
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
+
+    public PersonaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(PersonaEjb ejb) {
+        this.ejb = ejb;
+    }
+
+    public IngresoEjb getEjb1() {
+        return ejb1;
+    }
+
+    public void setEjb1(IngresoEjb ejb1) {
+        this.ejb1 = ejb1;
+    }
+    
+    
     
     public Date getFecha() {
         return fecha;
@@ -92,58 +130,10 @@ public class CitaBeansBeans {
     }
 
     public String buscaPersona() {
-        /*Persona p1 = new Persona();
-         p1.setDNI("45355678f");
-         p1.setNumSegSocial(444457);
-         p1.setNombre("juanito");
-         p1.setApellido1("claverias");
-         p1.setApellido2("gonzalez");
-         p1.setEmail("persona1@h.com");
-         p1.setEstadoCivil("soltero");
-         p1.setTelefono("988544346");
-         p1.setDireccion("callemarmoles");
-         p1.setCodigoPostal(13335);
-         p1.setCiudad("Jaen");
-         p1.setPais("España");
-         p1.setSexo("V");
-         Medico medico = new Medico();
-         medico.setPassword("micontraseña");
-         medico.setEmail("alberto@gmail.com");
-         medico.setNombre("Alberto");
-         medico.setApellido1("Sanchez");
-         medico.setApellido2("Muñoz");
-         medico.setDNI("23232314h");
-         medico.setNumSegSocial(1);
-         medico.setEstadoCivil("Casado");
-         medico.setPais("España");
-         medico.setCiudad("Malaga");
-         medico.setCodigoPostal(29009);
-         medico.setDireccion("Calle Pepito");
-         medico.setTelefono("954321123");
-         medico.setActivo(true);
-         medico.setSexo("V");
-         medico.setTipo(Enumerados.tipoTrabajador.MEDICO);
-         medico.setDespacho("3.3.3");
-         p1.setMedicoCabecera(medico);
-         persona = p1;
-         Enfermero enf = new Enfermero();
-         enf.setNumSegSocial(1);
-         enf.setDNI("25351068F");
-         enf.setNombre("Vladimir");
-         enf.setApellido1("Putin");
-         enf.setTelefono("666666666");
-         enf.setEstadoCivil("Casado");
-         enf.setDireccion("Calle Falsa 123");
-         enf.setCodigoPostal(29000);
-         enf.setPais("Rusia");
-         enf.setCiudad("Moscow");
-         enf.setSexo("Varón");
-         enfermero = enf;
-         horas = new ArrayList<>();
-         horas.add("primera");
-         horas.add("segunda");*/
+        
         persona = ejb.getPersona(nss);
-        Medico m = persona.getMedicoCabecera();
+        if(persona.getMedicoCabecera()==null)
+            Medico m = ;
         List<Horario> hor = m.getHorarios();
         int anho = Calendar.YEAR;
         int mes = Calendar.MONTH;
@@ -249,7 +239,7 @@ public class CitaBeansBeans {
                 ent = addMinutesToDate(ent,15);
             }
         }
-        return null;
+        return "dev";
     }
 
     public Enfermero getEnfermero() {
