@@ -22,7 +22,8 @@ import javax.faces.bean.ViewScoped;
 public class IngresoBeans {
 
     private Cama cama;
-    public Persona persona;
+    private Persona persona;
+    private Integer nss;
     
     @EJB
     private IngresoEjb ejb;
@@ -44,7 +45,19 @@ public class IngresoBeans {
         h.setPlanta(p);
         p.setId(1L);
         p.setNombre("una planta");*/
+    }
+    
+    public String inic(){
         cama = ejb.primeraLibre();
+        return "inic";
+    }
+    
+    public Integer getNss(){
+        return nss;
+    }
+    
+    public void setNss(Integer nss){
+        this.nss = nss;
     }
 
     public Cama getCama() {
@@ -57,7 +70,7 @@ public class IngresoBeans {
     }
     
     public String buscaPersona(){
-        persona = pers.getPersona(persona.getNumSegSocial());
+        persona = pers.getPersona(nss);
         return "null";
         
     }
