@@ -8,7 +8,6 @@ package Vista;
 import Ejb.IngresoEjb;
 import Ejb.PersonaEjb;
 import Entidades.Cantidad;
-import static Entidades.HistoriaClinica_.persona;
 import Entidades.Persona;
 import Entidades.Tratamiento;
 import java.util.List;
@@ -49,10 +48,8 @@ public class TratamientoBeans {
         return tratamiento;
     }
 
-    /**
-     * @param t the t to set
-     */
-    public void setT(Tratamiento tratamiento) {
+
+    public void setTratamiento(Tratamiento tratamiento) {
         this.tratamiento = tratamiento;
     }
 
