@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Ejb.MedicamentosEjb;
 import Ejb.PersonaEjb;
 import Entidades.Cantidad;
 import Entidades.Enumerados;
@@ -13,6 +14,7 @@ import Entidades.Informe;
 import Entidades.Medicamento;
 import Entidades.Medico;
 import Entidades.Persona;
+import Entidades.Tratamiento;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,23 @@ public class DiagnosticoBeans {
     private List<Cantidad> tratamientos=new ArrayList<>();
     private Informe informe=new Informe();
     private int var;
+    private Tratamiento trata = new Tratamiento();
+
+    public Tratamiento getTrata() {
+        return trata;
+    }
+
+    public void setTrata(Tratamiento trata) {
+        this.trata = trata;
+    }
+
+    public MedicamentosEjb getMedic() {
+        return medic;
+    }
+
+    public void setMedic(MedicamentosEjb medic) {
+        this.medic = medic;
+    }
     
     private HistoriaClinica historia;
     private List<Informe> informes = new ArrayList<>();
@@ -43,6 +62,9 @@ public class DiagnosticoBeans {
     
     @EJB
     private PersonaEjb pers;
+    
+    @EJB
+    private MedicamentosEjb medic;
    
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
@@ -51,7 +73,7 @@ public class DiagnosticoBeans {
     }
 
     public String inic(){
-        p1 = pers.getPersona(2);
+        p1 = pers.getPersona(2); // Cambiar a pers.buscado()
         return "Inic";
     }
 
@@ -134,6 +156,10 @@ public class DiagnosticoBeans {
     }
     
     public String terminarDiagnostico(){
+        login.setBuscado(login.getNss());
+        
+        
+        
         return "Trabajo.xhtml";
     }
     
@@ -153,9 +179,10 @@ public class DiagnosticoBeans {
     
     public String anadirTratamiento(){
         Cantidad c = new Cantidad();
-        
+     
         c.setCantidad(cantidad);
-        c.setMedicamento(medicamentos.get(seleccionado));
+        
+        c.setMedicamento(medic.getMedicamento().get(var-1));
         tratamientos.add(c);
         return "null";
     }

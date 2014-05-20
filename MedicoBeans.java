@@ -43,8 +43,12 @@ public class MedicoBeans {
     List<Especialidad> especialidades = new ArrayList<Especialidad>();
    */
     public MedicoBeans(){
+<<<<<<< HEAD
        /*
         especialidad = new Especialidad();
+=======
+       /* especialidad = new Especialidad();
+>>>>>>> 2f9941b9c079632056d86368f3e21fb3924d71a2
         especialidad.setNombre("Oftalmología");
         especialidad.setDescripcion("Especialidad para el tratamiento de los ojos");
         especialidades.add(especialidad);
@@ -116,8 +120,45 @@ public class MedicoBeans {
         medicoc.setSalario(s);
         medicoc.setDespacho("3.3.2");
         medicoc.setPrecioHora(e);
+<<<<<<< HEAD
         medicoc.setMedicoCabecera(medico);   
                */
+=======
+        medicoc.setMedicoCabecera(medico);  
+               */
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Medico getMedicoc() {
+        return medicoc;
+    }
+
+    public void setMedicoc(Medico medicoc) {
+        this.medicoc = medicoc;
+    }
+
+    public float getS() {
+        return s;
+    }
+
+    public void setS(float s) {
+        this.s = s;
+    }
+
+    public float getE() {
+        return e;
+    }
+
+    public void setE(float e) {
+        this.e = e;
+>>>>>>> 2f9941b9c079632056d86368f3e21fb3924d71a2
     }
 
     /**
