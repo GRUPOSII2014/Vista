@@ -7,6 +7,7 @@
 package Vista;
 
 
+import Ejb.PersonaEjb;
 import Entidades.Departamento;
 import Entidades.Enumerados;
 import Entidades.Especialidad;
@@ -16,29 +17,30 @@ import Entidades.Medico;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
  * @author ALBERTO
  */
 
+
 @ManagedBean(name="MedicoBean")
 @RequestScoped
 public class MedicoBeans {
-    Medico medico;
-    Medico medicoc;
-    Especialidad especialidad;
-    Departamento departamento;
-    Hospital hospital;
-    HistoriaClinica hi;
-    float s = 930;
-    float e = 20;
-    List<Especialidad> especialidades = new ArrayList<Especialidad>();
-   
+    private PersonaEjb ejb;
+    private Medico m;
+    
     public MedicoBeans(){
+
+       /*
         especialidad = new Especialidad();
+ especialidad = new Especialidad();
+ 2f9941b9c079632056d86368f3e21fb3924d71a2
         especialidad.setNombre("Oftalmología");
         especialidad.setDescripcion("Especialidad para el tratamiento de los ojos");
         especialidades.add(especialidad);
@@ -110,95 +112,37 @@ public class MedicoBeans {
         medicoc.setSalario(s);
         medicoc.setDespacho("3.3.2");
         medicoc.setPrecioHora(e);
-        medicoc.setMedicoCabecera(medico);    
+<<<<<<< HEAD
+        medicoc.setMedicoCabecera(medico);   
+        medicoc.setMedicoCabecera(medico);  
+               */
     }
 
-    public Medico getMedico() {
-        return medico;
-    }
 
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
-    public Medico getMedicoc() {
-        return medicoc;
-    }
-
-    public void setMedicoc(Medico medicoc) {
-        this.medicoc = medicoc;
-    }
-
-    public float getS() {
-        return s;
-    }
-
-    public void setS(float s) {
-        this.s = s;
-    }
-
-    public float getE() {
-        return e;
-    }
-
-    public void setE(float e) {
-        this.e = e;
-    }
-    
-    public String getDni(){
-        return medico.getDNI();
-    } 
-
-    public Especialidad getEspecialidad() {
-        return especialidad;
-    }
-
-    public void setEspecialidad(Especialidad especialidad) {
-        this.especialidad = especialidad;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
-    public Hospital getHospital() {
-        return hospital;
-    }
-
-    public void setHospital(Hospital hospital) {
-        this.hospital = hospital;
-    }
-
-    public List<Especialidad> getEspecialidades() {
-        return especialidades;
-    }
-
-    public void setEspecialidades(List<Especialidad> especialidades) {
-        this.especialidades = especialidades;
-    }
-    
-    public String doChanges(){
-        //Implementar
+    /**
+     * @return the m
+     */
+    public String crearMedico (){
+        ejb.crearMedico(m);
         return null;
     }
     
-    public String goHistoriaClinica(){
-         return "HistoriaClinicaMedico.xhtml";
+    public Medico getM() {
+        return m;
     }
 
-    public HistoriaClinica getHi() {
-        return hi;
+    /**
+     * @param m the m to set
+     */
+    public void setM(Medico m) {
+        this.m = m;
     }
 
-    public void setHi(HistoriaClinica hi) {
-        this.hi = hi;
+    /*
+     public void crear(ActionEvent actionEvent){
+        ejb.crearPersona(p);
+        FacesContext context = FacesContext.getCurrentInstance();  
+        context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada correctamente"));
     }
-    
-    public String goInformes(){
-        return "Informes.xhtml";
-    }
+    */
 }

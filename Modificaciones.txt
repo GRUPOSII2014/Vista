@@ -4,3 +4,7 @@ Fecha nacimiento en Persona.
 Arregladas Relaciones de hospital-planta-habitaciones-cama.
 Plantilla Reparadas.
 Añadida Vista Para ver todas las personas.
+Quitado fecha nacimiento de historia clinica, por que esta repetida en Persona.
+Quitado salario de la entidad TrabajadorHospital.
+Añadido campo Dia a horario.
+Añadida entidad de Administrador.

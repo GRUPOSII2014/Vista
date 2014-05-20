@@ -34,9 +34,10 @@ public class PersonaBeans {
     public void setP(Persona p) {
         this.p = p;
     }
-    public void crear(ActionEvent actionEvent){
+    public String crear(ActionEvent actionEvent){
         ejb.crearPersona(p);
-        FacesContext context = FacesContext.getCurrentInstance();  
-        context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada correctamente"));
+        FacesContext context = FacesContext.getCurrentInstance();
+        return null;
+       
     }
 }

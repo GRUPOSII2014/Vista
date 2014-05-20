@@ -34,6 +34,16 @@ public class EnumeradosBean {
         return lista;
         
     }
+    
+      public List<String> listaEspecialidades (){
+       List<String> lista = new ArrayList<String>();
+        for (Entidades.Enumerados.listaEspecialidad c: Entidades.Enumerados.listaEspecialidad.values()){
+           lista.add(String.valueOf(c));
+       } 
+        return lista;
+        
+    }
+      
      public List<String> getTipoAlerta (){
        List<String> lista = new ArrayList<String>();
         for (Entidades.Enumerados.tipoAlerta c: Entidades.Enumerados.tipoAlerta.values()){

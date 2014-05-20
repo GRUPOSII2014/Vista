@@ -46,7 +46,11 @@ public class IndexController {
         
         if (p != null) {
             login.setNss(p.getNumSegSocial());
-            login.setTipoUsuario(p.getDisc());
+            if (p.getDisc().equalsIgnoreCase("P")) 
+                login.setTipoUsuario(p.getDisc());
+            else {
+                login.setTipoUsuario(persona.getDiscriminador(p.getNumSegSocial()));
+            }
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Error", "No existe el usuario o no coinciden las credenciales."));

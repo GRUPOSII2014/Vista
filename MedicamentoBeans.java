@@ -6,13 +6,12 @@
 
 package Vista;
 
+import Ejb.MedicamentosEjb;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.el.PropertyNotFoundException;
 import javax.faces.component.behavior.AjaxBehavior;
 
 /**
@@ -22,6 +21,27 @@ import javax.faces.component.behavior.AjaxBehavior;
 @ManagedBean
 @RequestScoped
 public class MedicamentoBeans {
+    
+    @EJB
+    private MedicamentosEjb ejb;
+    int var;
+
+    public int getVar() {
+        return var;
+    }
+
+    public void setVar(int var) {
+        this.var = var;
+    }
+    
+    public MedicamentosEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(MedicamentosEjb ejb) {
+        this.ejb = ejb;
+    }
+    
     private List<String> medicamentos;
     
     public MedicamentoBeans(){
