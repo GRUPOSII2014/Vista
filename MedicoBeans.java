@@ -7,6 +7,7 @@
 package Vista;
 
 
+import Ejb.PersonaEjb;
 import Entidades.Departamento;
 import Entidades.Enumerados;
 import Entidades.Especialidad;
@@ -31,17 +32,9 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name="MedicoBean")
 @RequestScoped
 public class MedicoBeans {
+    private PersonaEjb ejb;
     private Medico m;
-    private Medico medico;
-    private Medico medicoc;
-    private Especialidad especialidad;
-    private Departamento departamento;
-    private Hospital hospital;
-    private HistoriaClinica hi;
-    private float s = 930;
-    private float e = 20;
-    private List<Especialidad> especialidades = new ArrayList<Especialidad>();
-   
+    
     public MedicoBeans(){
 
        /*
@@ -125,41 +118,15 @@ public class MedicoBeans {
                */
     }
 
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
-    public Medico getMedicoc() {
-        return medicoc;
-    }
-
-    public void setMedicoc(Medico medicoc) {
-        this.medicoc = medicoc;
-    }
-
-    public float getS() {
-        return s;
-    }
-
-    public void setS(float s) {
-        this.s = s;
-    }
-
-    public float getE() {
-        return e;
-    }
-
-    public void setE(float e) {
-        this.e = e;
-    }
 
     /**
      * @return the m
      */
+    public String crearMedico (){
+        ejb.crearMedico(m);
+        return null;
+    }
+    
     public Medico getM() {
         return m;
     }

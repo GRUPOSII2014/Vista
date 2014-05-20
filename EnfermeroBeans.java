@@ -7,21 +7,7 @@ package Vista;
  */
 
 
-import Entidades.Alerta;
-import Entidades.Cita;
-import Entidades.Departamento;
 import Entidades.Enfermero;
-import Entidades.Enumerados;
-import Entidades.Horario;
-import Entidades.Hospital;
-import Entidades.Medico;
-import Entidades.Mensaje;
-import Entidades.Persona;
-import Entidades.Trabajador;
-import Entidades.Urgencia;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -29,7 +15,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class EnfermeroBeans {
     private Enfermero enf;
-    
+    private Ejb.PersonaEjb ejb;
     public EnfermeroBeans(){
         
         
@@ -264,6 +250,11 @@ public class EnfermeroBeans {
     /**
      * @return the enf
      */
+    public String crearEnfermero(){
+        ejb.crearEnfermero(enf);
+        return null;
+    }
+    
     public Enfermero getEnf() {
         return enf;
     }
