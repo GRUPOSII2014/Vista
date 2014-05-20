@@ -229,6 +229,11 @@ public class DiagnosticoBeans {
         for(Informe e : p1.getHistoriaclinica().getInformes()){
             informes.add(e);  
         }
+        informes = p1.getHistoriaclinica().getInformes();
+        
+       // for(Informe e : p1.getHistoriaclinica().getInformes()){
+       //     informes.add(e);  
+       // }
         return  informes;
     }
 
