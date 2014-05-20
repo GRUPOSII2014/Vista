@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Ejb.CrearCitaEjb;
 import Ejb.IngresoEjb;
 import Ejb.PersonaEjb;
 import Entidades.Cita;
@@ -20,8 +21,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -50,15 +54,17 @@ public class CitaBeansBeans {
     private PersonaEjb ejb;
     @EJB
     private IngresoEjb ejb1;
+    @EJB
+    private CrearCitaEjb ejb2;
+    
     
 
     public CitaBeansBeans() {
-        
-
     }
-
+    
     public String inic(){
         medicosCabecera = new ArrayList<>();
+        medicosCabecera.addAll(ejb.medicos());
         horas = null;
         tiposCita = new ArrayList<>();
         tiposCita.add("Enfermeria");
@@ -87,6 +93,14 @@ public class CitaBeansBeans {
         this.cita = cita;
     }
 
+    public CrearCitaEjb getEjb2() {
+        return ejb2;
+    }
+
+    public void setEjb2(CrearCitaEjb ejb2) {
+        this.ejb2 = ejb2;
+    }
+    
     public PersonaEjb getEjb() {
         return ejb;
     }
@@ -130,118 +144,21 @@ public class CitaBeansBeans {
     }
 
     public String buscaPersona() {
-        /*
         persona = ejb.getPersona(nss);
-        if(persona.getMedicoCabecera()==null)
-            Medico m = ;
-        List<Horario> hor = m.getHorarios();
-        int anho = Calendar.YEAR;
-        int mes = Calendar.MONTH;
-        int dia = Calendar.DAY_OF_MONTH;
-        Date d = new Date();
-        d.setYear(anho);
-        d.setMonth(mes);
-        d.setDate(dia);
-        String esteDia = obtenerDia(d);
-        for (Horario h : hor) {
-            if (!h.getDia().equals(esteDia)) {
-                hor.remove(h);
-            }
-        }
-        
-        for (Horario h:hor){
-            Date ent = h.getHoraEntrada();
-            Date sal = h.getHoraSalida();
-            while (ent.before(sal)){
-                boolean b = true;
-                List<Cita> citas = m.getCitas();
-                for (Cita c:citas){
-                    if (c.getFecha()==ent){
-                        b = false;
-                    }
-                }
-                if (b){
-                    horas.add(ent);
-                }
-                ent = addMinutesToDate(ent,15);
-            }
-        }
-        
-        medicosCabecera.add(m);*/
-        return "dev";
+        return "null";
     }
     
-    public String buscaPersonaE(){
-        persona = ejb.getPersona(nss);
-        return null;
+    public void crearCita(ActionEvent actionEvent){
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Error", "El dni ya se encuentra en la base de datos"));
     }
 
-    public Date addMinutesToDate(Date date, int minutes) {
-        Calendar calendarDate = Calendar.getInstance();
-        calendarDate.setTime(date);
-        calendarDate.add(Calendar.MINUTE, minutes);
-        return calendarDate.getTime();
-    }
-
-    public String obtenerDia(Date d) {
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(d);
-        int dia = cal.DAY_OF_WEEK;
-
-        switch (dia) {
-            case 1:
-                return "Domingo";
-            case 2:
-                return "Lunes";
-            case 3:
-                return "Martes";
-            case 4:
-                return "Miercoles";
-            case 5:
-                return "Jueves";
-            case 6:
-                return "Viernes";
-            case 7:
-                return "Sabado";
-            default:
-                return "NOT VALID";
-        }
+    public String asignaMedico(){
+        persona.setMedicoCabecera(medicoBuscado);
+        ejb.actualizaPersona(persona);
+        return "null";
     }
     
-    public String asignarHoras(){
-       
-        List<Horario> hor = new ArrayList<>();
-        if(enfermero.getHorarios()!=null)
-            hor.addAll(enfermero.getHorarios());
-        String esteDia = obtenerDia(fecha);
-        for (Horario h : hor) {
-            if (!h.getDia().equals(esteDia)) {
-                hor.remove(h);
-            }
-        }
-        
-        for (Horario h:hor){
-            Date ent = h.getHoraEntrada();
-            Date sal = h.getHoraSalida();
-            while (ent.before(sal)){
-                boolean b = true;
-                List<Cita> citas = new ArrayList<>();
-                if(enfermero.getCitas()!=null)
-                    citas.addAll(enfermero.getCitas());
-                for (Cita c:citas){
-                    if (c.getFecha()==ent){
-                        b = false;
-                    }
-                }
-                if (b){
-                    horas.add(ent);
-                }
-                ent = addMinutesToDate(ent,15);
-            }
-        }
-        return "dev";
-    }
-
     public Enfermero getEnfermero() {
         return enfermero;
     }
@@ -282,8 +199,6 @@ public class CitaBeansBeans {
         this.medicosCabecera = medicosCabecera;
     }
 
-    //public void buscaHoras(){
-    //}
     public List<Date> getHoras() {
         return horas;
     }
