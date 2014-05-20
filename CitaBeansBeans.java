@@ -130,7 +130,7 @@ public class CitaBeansBeans {
     }
 
     public String buscaPersona() {
-        
+        /*
         persona = ejb.getPersona(nss);
         if(persona.getMedicoCabecera()==null)
             Medico m = ;
@@ -167,7 +167,7 @@ public class CitaBeansBeans {
             }
         }
         
-        medicosCabecera.add(m);
+        medicosCabecera.add(m);*/
         return "dev";
     }
     
