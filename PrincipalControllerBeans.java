@@ -10,8 +10,10 @@ import Entidades.Alerta;
 import Entidades.Mensaje;
 import Entidades.Persona;
 import Entidades.Trabajador;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -110,9 +112,10 @@ public class PrincipalControllerBeans {
     
     public String enviaMensaje() {
         Trabajador from, to;
-        
+        StringTokenizer st = new StringTokenizer(consulta,";");
+        st.nextToken();
         from = persona.getTrabajador(login.getNss());
-        to = persona.getTrabajador(consulta);
+        to = persona.getTrabajador(st.nextToken());
         
         Mensaje m = new Mensaje();
         m.setAsunto("");
@@ -127,6 +130,10 @@ public class PrincipalControllerBeans {
     }
     
     public List<String> getTrabajadores(String query) {
-        return persona.getTrabajadores(query);
-    }
+        List<String> results = new ArrayList<String>();
+        for (Trabajador p : persona.getTrabajadores(query)){
+            results.add(p.getNombre()+" "+p.getApellido1()+" "+p.getApellido2() + ";" + p.getDNI());
+        }
+        return results;  
+    } 
 }
