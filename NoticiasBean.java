@@ -7,9 +7,7 @@
 package Vista;
 
 import Ejb.NoticiasEJB;
-import Ejb.PersonaEjb;
 import Entidades.Noticia;
-import Entidades.Trabajador;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
