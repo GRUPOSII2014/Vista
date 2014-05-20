@@ -6,6 +6,7 @@
 
 package Vista;
 
+import Ejb.crearCamaEjb;
 import Entidades.Habitacion;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -41,4 +42,14 @@ public class crearCama {
     public List <Habitacion> todasHabitaciones(){
         return ejb.todasHabitaciones();
      }
+
+    public crearCamaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(crearCamaEjb ejb) {
+        this.ejb = ejb;
+    }
+    
+    
 }
