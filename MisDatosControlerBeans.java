@@ -8,6 +8,7 @@ package Vista;
 
 import Ejb.PersonaEjb;
 import Entidades.Horario;
+import Entidades.Medico;
 import Entidades.Persona;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +23,8 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class MisDatosControlerBeans {
     private Persona persona;
+    private Medico medico;
+    
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
     @EJB
@@ -32,6 +35,18 @@ public class MisDatosControlerBeans {
     
     public MisDatosControlerBeans() {
         
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public String queEs(){
+        medico = ejb.getMedico(login.getNss());
+        return persona.getDisc();
+    }
+    public void setMedico(Medico medico) {
+        this.medico = medico;
     }
     
     public String inic(){
@@ -64,7 +79,7 @@ public class MisDatosControlerBeans {
         StringBuilder sb = new StringBuilder();
         if(persona.getMedicoCabecera()!=null){
             for (Horario h : persona.getMedicoCabecera().getHorarios()){
-                sb.append(h.getDia()+", ");
+                sb.append(h.getDia()).append(", ");
             }
             return sb.toString().substring(0,sb.length()-2)+".";
         }else{
