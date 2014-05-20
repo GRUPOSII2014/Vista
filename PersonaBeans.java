@@ -38,6 +38,6 @@ public class PersonaBeans {
         ejb.crearPersona(p);
         FacesContext context = FacesContext.getCurrentInstance();
         return null;
-        //context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada correctamente"));
+       
     }
 }
