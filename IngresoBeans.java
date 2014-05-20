@@ -48,7 +48,7 @@ public class IngresoBeans {
     }
     
     public String inic(){
-        cama = ejb.primeraLibre();
+        cama = ejb.primeraLibre(persona);
         return "inic";
     }
     

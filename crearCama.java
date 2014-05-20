@@ -35,6 +35,7 @@ public class crearCama {
     }
     
     public String crearCama (){
+        ejb.comprobarCama(c);
         return null;
     }
     
