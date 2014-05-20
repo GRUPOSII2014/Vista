@@ -19,9 +19,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 
 /**
  *
@@ -43,12 +43,17 @@ public class CitaBeansBeans {
     private Enfermero enfermero;
     private Date fecha;
     private Cita cita;
-    @Inject
+    @EJB
     private PersonaEjb ejb;
-    @Inject
+    @EJB
     private IngresoEjb ejb1;
 
     public CitaBeansBeans() {
+        
+
+    }
+
+    public String inic(){
         medicosCabecera = new ArrayList<>();
         horas = null;
         tiposCita = new ArrayList<>();
@@ -59,9 +64,9 @@ public class CitaBeansBeans {
         cita = new Cita();
         urgencia = new Urgencia();
         enfermeros = ejb.todosEnfermeros();
-
+        return "Inic";
     }
-
+    
     public Date getFecha() {
         return fecha;
     }
@@ -173,7 +178,7 @@ public class CitaBeansBeans {
         }
         
         medicosCabecera.add(m);
-        return null;
+        return "dev";
     }
     
     public String buscaPersonaE(){
@@ -214,15 +219,11 @@ public class CitaBeansBeans {
     }
     
     public String asignarHoras(){
-        List<Horario> hor = enfermero.getHorarios();
-        int anho = Calendar.YEAR;
-        int mes = Calendar.MONTH;
-        int dia = Calendar.DAY_OF_MONTH;
-        Date d = new Date();
-        d.setYear(anho);
-        d.setMonth(mes);
-        d.setDate(dia);
-        String esteDia = obtenerDia(d);
+       
+        List<Horario> hor = new ArrayList<>();
+        if(enfermero.getHorarios()!=null)
+            hor.addAll(enfermero.getHorarios());
+        String esteDia = obtenerDia(fecha);
         for (Horario h : hor) {
             if (!h.getDia().equals(esteDia)) {
                 hor.remove(h);
@@ -234,7 +235,9 @@ public class CitaBeansBeans {
             Date sal = h.getHoraSalida();
             while (ent.before(sal)){
                 boolean b = true;
-                List<Cita> citas = enfermero.getCitas();
+                List<Cita> citas = new ArrayList<>();
+                if(enfermero.getCitas()!=null)
+                    citas.addAll(enfermero.getCitas());
                 for (Cita c:citas){
                     if (c.getFecha()==ent){
                         b = false;
