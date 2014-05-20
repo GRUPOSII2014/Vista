@@ -28,9 +28,12 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class EnfermeroBeans {
-    Enfermero enf;
+    private Enfermero enf;
     
     public EnfermeroBeans(){
+        
+        
+        /*
         enf = new Enfermero();
         enf.setNumSegSocial(1);
         enf.setDNI("25351068F");
@@ -254,114 +257,23 @@ public class EnfermeroBeans {
         enf.setMensajeFrom(recibidos);
         enf.setMensajeTo(enviados);  
         enf.setUrgencias(urgencias);
+                */
+    
+    }
+
+    /**
+     * @return the enf
+     */
+    public Enfermero getEnf() {
+        return enf;
+    }
+
+    /**
+     * @param enf the enf to set
+     */
+    public void setEnf(Enfermero enf) {
+        this.enf = enf;
     }
     
-    public String back(){
-        return "V_Enfermero.xhtml";
-    }
-    
-    public Integer getId(){
-        return enf.getNumSegSocial();
-    }
-    
-    public String getDni(){
-        return enf.getDNI();
-    }
-    
-    public String getNombre(){
-        return enf.getNombre();
-    }
-    
-    public String getApellido1(){
-        return enf.getApellido1();
-    }
-    
-    public String getSexo(){
-        return enf.getSexo();
-    }
-    
-    public String getApellido2(){
-        return enf.getApellido2();
-    }
-    
-    public Medico getMedicoCabecera(){
-        return enf.getMedicoCabecera();
-    }
-    
-    public String getEmail(){
-        return enf.getEmail();
-    }
-    
-    public String getEstadoCivil(){
-        return enf.getEstadoCivil();
-    }
-    
-    public String getTelefono(){
-        return enf.getTelefono();
-    }
-    
-    public String getDireccion(){
-        return enf.getDireccion();
-    }
-    
-    public Integer getCodigoPostal(){
-        return enf.getCodigoPostal();
-    }
-    
-    public String getCiudad(){
-        return enf.getCiudad();
-    }
-    
-    public String getPais(){
-        return enf.getPais();
-    }
-    
-    public List<Mensaje> getMensajesEntrada(){
-        return enf.getMensajeFrom();
-            
-    }
-    
-    public List<Mensaje> getMensajesSalida(){
-        return enf.getMensajeTo();
-    }
-    
-    public String getEntrada(){
-        return "entrada.xhtml";
-    }
-    
-    public String getSalida(){
-        return "salida.xhtml";
-    }
-    
-    public String getAlertas(){
-        return "alertas.xhtml";
-    }
-    
-    public String getCitas(){
-        return "citas.xhtml";
-    }
-    
-    public List<Cita> getMisCitas(){
-        return enf.getCitas();
-    }
-    
-    public String getUrgencias(){
-        return "urgencias.xhtml";
-    }
-    
-    public String getHorarios(){
-        return "horarios.xhtml";
-    }
-    
-    public List<Horario> getMisHorarios(){
-        return enf.getHorarios();
-    }
-    
-    public List<Urgencia> getMisUrgencias(){
-        return enf.getUrgencias();
-    }
-    
-    public List<Alerta> getMisAlertas(){
-        return enf.getAlertas();
-    }
+ 
 }
