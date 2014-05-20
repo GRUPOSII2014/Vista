@@ -24,7 +24,7 @@ public class NoticiasBean {
 
     private String titulo, noticia;
     
-    @ManagedProperty(value = "#{LoginController}")
+    @ManagedProperty(value = "#{loginController}")
     private LoginController login;
     
     @EJB
@@ -54,6 +54,7 @@ public class NoticiasBean {
     
     public String doNoticia() {
         Noticia n = new Noticia();
+        
         n.setDescripcion(noticia);
         n.setTitulo(titulo);
         n.setFecha(new Date());
