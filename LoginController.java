@@ -21,10 +21,19 @@ public class LoginController implements Serializable {
     private Integer nss;
     private String tipoUsuario;
     private Integer buscado;
+    private String tipoCrearPersona;
     /**
      * Creates a new instance of LoginController
      */
     public LoginController() {
+    }
+
+    public String getTipoCrearPersona() {
+        return tipoCrearPersona;
+    }
+
+    public void setTipoCrearPersona(String tipoCrearPersona) {
+        this.tipoCrearPersona = tipoCrearPersona;
     }
 
     public Integer getNss() {

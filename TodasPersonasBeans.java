@@ -8,17 +8,16 @@ package Vista;
 
 import Ejb.PersonaEjb;
 import Entidades.Persona;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 
 /**
  *
@@ -28,7 +27,7 @@ import javax.inject.Inject;
 @ViewScoped
 public class TodasPersonasBeans {
     private List<Persona> personasFiltradas= new ArrayList<>();
-    @Inject
+    @EJB
     private PersonaEjb personaEjb;
     @ManagedProperty(value = "#{loginController}")
     private LoginController login;
@@ -41,8 +40,20 @@ public class TodasPersonasBeans {
         return personaEjb.todasPersonas();
     }
 
+    public String creaMedico(){
+        login.setTipoUsuario("Medico");
+        return "Crearpersona";
+    }
+    public String creaEnfermero(){
+        login.setTipoUsuario("Enfermero");
+        return "Crearpersona";
+    }
+    public String creaAdministrativo(){
+        login.setTipoUsuario("Administrativo");
+        return "Crearpersona";
+    }
     public String creaPersona(){
-        Persona p1 = new Persona();
+        /*Persona p1 = new Persona();
         p1.setDNI("45355654f");
         p1.setNumSegSocial(1);
         p1.setNombre("juanito");
@@ -59,7 +70,8 @@ public class TodasPersonasBeans {
         p1.setPassword("1234");
         p1.setFechaNacimiento(Date.valueOf("1992-10-3"));
         personaEjb.crearPersona(p1);
-        return "null";
+                */
+        return "Crearpersona";
     }
     public List<Persona> getPersonasFiltradas() {
         return personasFiltradas;
