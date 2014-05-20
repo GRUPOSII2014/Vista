@@ -32,23 +32,22 @@ import javax.faces.event.ActionEvent;
 @RequestScoped
 public class MedicoBeans {
     private Medico m;
-   /* Medico medico;
-    Medico medicoc;
-    Especialidad especialidad;
-    Departamento departamento;
-    Hospital hospital;
-    HistoriaClinica hi;
-    float s = 930;
-    float e = 20;
-    List<Especialidad> especialidades = new ArrayList<Especialidad>();
-   */
+    private Medico medico;
+    private Medico medicoc;
+    private Especialidad especialidad;
+    private Departamento departamento;
+    private Hospital hospital;
+    private HistoriaClinica hi;
+    private float s = 930;
+    private float e = 20;
+    private List<Especialidad> especialidades = new ArrayList<Especialidad>();
+   
     public MedicoBeans(){
-<<<<<<< HEAD
+
        /*
         especialidad = new Especialidad();
-=======
-       /* especialidad = new Especialidad();
->>>>>>> 2f9941b9c079632056d86368f3e21fb3924d71a2
+ especialidad = new Especialidad();
+ 2f9941b9c079632056d86368f3e21fb3924d71a2
         especialidad.setNombre("Oftalmología");
         especialidad.setDescripcion("Especialidad para el tratamiento de los ojos");
         especialidades.add(especialidad);
@@ -122,8 +121,6 @@ public class MedicoBeans {
         medicoc.setPrecioHora(e);
 <<<<<<< HEAD
         medicoc.setMedicoCabecera(medico);   
-               */
-=======
         medicoc.setMedicoCabecera(medico);  
                */
     }
@@ -158,7 +155,6 @@ public class MedicoBeans {
 
     public void setE(float e) {
         this.e = e;
->>>>>>> 2f9941b9c079632056d86368f3e21fb3924d71a2
     }
 
     /**
