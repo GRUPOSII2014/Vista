@@ -9,6 +9,7 @@ package Vista;
 import Ejb.crearCamaEjb;
 import Entidades.Habitacion;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -20,6 +21,7 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class crearCama {
    private Entidades.Cama c;
+   @EJB
    private Ejb.crearCamaEjb ejb;
     /**
      * @return the c

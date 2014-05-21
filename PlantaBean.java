@@ -24,7 +24,7 @@ import javax.faces.bean.ViewScoped;
 public class PlantaBean {
     private Long id;
     private Integer numero;
-    private Hospital hospital;
+    private Integer hospital;
     private String nombre;
     private Planta planta;
     
@@ -67,19 +67,31 @@ public class PlantaBean {
         this.numero = numero;
     }
 
-    /**
-     * @return the hospital
-     */
-    public Hospital getHospital() {
+    public Integer getHospital() {
         return hospital;
     }
 
-    /**
-     * @param hospital the hospital to set
-     */
-    public void setHospital(Hospital hospital) {
+    public void setHospital(Integer hospital) {
         this.hospital = hospital;
     }
+
+    public Planta getPlanta() {
+        return planta;
+    }
+
+    public void setPlanta(Planta planta) {
+        this.planta = planta;
+    }
+
+    public HospitalEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(HospitalEjb ejb) {
+        this.ejb = ejb;
+    }
+
+
 
     /**
      * @return the nombre
@@ -96,15 +108,13 @@ public class PlantaBean {
     }
     
     public String crearPlanta(){
-        planta.setId(id);
-        planta.setNombre(nombre);
-        planta.setNombre(nombre);
-        planta.setHospital(hospital);
-        List<Planta> plantas = new ArrayList<>();
-        plantas.addAll(hospital.getPlantas());
-        plantas.add(planta);
-        hospital.setPlantas(plantas);
+        for(Hospital h : ejb.getHospitales()){
+            if(h.getId()==hospital){
+                planta.setHospital(h);
+                break;
+            }
+        }
         ejb.crearPlanta(planta);
-        return null;
+        return "principal.xhtml";
     }
 }

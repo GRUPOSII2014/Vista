@@ -24,8 +24,6 @@ public class CrearHospitalBean {
     private String direccion;
     private Integer codigoPostal;
     private String ciudad;
-    private Date horaApertura;
-    private Date horaCierre;
     private String localizacion;
     private Hospital hospital = new Hospital();
     
@@ -92,33 +90,6 @@ public class CrearHospitalBean {
         this.ciudad = ciudad;
     }
 
-    /**
-     * @return the horaApertura
-     */
-    public Date getHoraApertura() {
-        return horaApertura;
-    }
-
-    /**
-     * @param horaApertura the horaApertura to set
-     */
-    public void setHoraApertura(Date horaApertura) {
-        this.horaApertura = horaApertura;
-    }
-
-    /**
-     * @return the horaCierre
-     */
-    public Date getHoraCierre() {
-        return horaCierre;
-    }
-
-    /**
-     * @param horaCierre the horaCierre to set
-     */
-    public void setHoraCierre(Date horaCierre) {
-        this.horaCierre = horaCierre;
-    }
 
     /**
      * @return the localizacion
@@ -131,8 +102,6 @@ public class CrearHospitalBean {
         hospital.setNombre(nombre);
         hospital.setCiudad(ciudad);
         hospital.setCodigoPostal(codigoPostal);
-        hospital.setHoraApertura(horaApertura);
-        hospital.setHoraCierre(horaCierre);
         hospital.setLocalizacion(localizacion);
         ejb.crearHospital(hospital);
         return null;

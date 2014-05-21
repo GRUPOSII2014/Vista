@@ -26,7 +26,7 @@ import javax.faces.bean.ViewScoped;
 public class HabitacionBean {
     private Long id;
     private Integer numero;
-    private Planta planta;
+    private Long planta;
     private Enumerados.tipoHabitacion tipo;
     private Habitacion habitacion;
     
@@ -50,14 +50,33 @@ public class HabitacionBean {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public Planta getPlanta(){
+
+    public Long getPlanta() {
         return planta;
     }
-    
-    public void setPlanta(Planta planta){
+
+    public void setPlanta(Long planta) {
         this.planta = planta;
     }
+
+
+
+    public Habitacion getHabitacion() {
+        return habitacion;
+    }
+
+    public void setHabitacion(Habitacion habitacion) {
+        this.habitacion = habitacion;
+    }
+
+    public HospitalEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(HospitalEjb ejb) {
+        this.ejb = ejb;
+    }
+    
     
     public List<Planta> getPlantas(){
         return ejb.getPlantas();
@@ -87,15 +106,15 @@ public class HabitacionBean {
     }
     
     public String crearHabitacion(){
-        habitacion.setId(id);
-        habitacion.setNum(numero);
-        habitacion.setTipo(tipo);
-        habitacion.setPlanta(planta);
-        List<Habitacion> habitaciones = new ArrayList<>();
-        habitaciones.addAll(planta.getHabitaciones());
-        habitaciones.add(habitacion);
-        planta.setHabitaciones(habitaciones);
-        ejb.crearHabitacion(habitacion);
-        return null;
+        for(Planta p : ejb.getPlantas()){
+            if(p.getId()==planta){
+                habitacion.setPlanta(p);
+                break;
+            }
+        }
+        
+              return "principal.xhtml";
+        //ejb.crearHabitacion(habitacion);
+  
     }
 }
