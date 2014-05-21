@@ -13,7 +13,6 @@ import Entidades.Enfermero;
 import Entidades.Enumerados;
 import Entidades.Medico;
 import Entidades.Persona;
-import Entidades.Urgencia;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +36,6 @@ public class CitaBeansBeans {
     private Integer idEnfer;
     private List<Medico> medicosCabecera;
 
-    private Urgencia urgencia;
     private Integer nss;
     private String tipocita;
 
@@ -186,17 +184,6 @@ public class CitaBeansBeans {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita"));
     }
-    
-    public void crearCitaU(ActionEvent actionEvent){
-        java.util.Random r = new java.util.Random();
-        Urgencia c = new Urgencia();
-        c.setAtendido(false);
-        c.setTrabajador(medicosCabecera.get(r.nextInt()%medicosCabecera.size()));
-        c.setPersona(persona);
-        ejbCita.crearUrgencia(c);
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita"));
-    }
 
     public String asignaMedico() {
         persona.setMedicoCabecera(ejbPersona.getMedico(medicoBuscado));
@@ -258,19 +245,5 @@ public class CitaBeansBeans {
 
     public void setTiposCita(List<String> tiposCita) {
         this.tiposCita = tiposCita;
-    }
-
-    /**
-     * @return the urgencia
-     */
-    public Urgencia getUrgencia() {
-        return urgencia;
-    }
-
-    /**
-     * @param urgencia the urgencia to set
-     */
-    public void setUrgencia(Urgencia urgencia) {
-        this.urgencia = urgencia;
     }
 }

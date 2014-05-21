@@ -42,8 +42,10 @@ public class MisDatosControlerBeans {
     }
 
     public String queEs(){
-        medico = ejb.getMedico(login.getNss());
-        return persona.getDisc();
+        if(ejb.getPersona(login.getNss()).getDisc()=="M"){
+            medico =ejb.getMedico(login.getNss());
+        }
+        return ejb.getPersona(login.getNss()).getDisc();
     }
     public void setMedico(Medico medico) {
         this.medico = medico;

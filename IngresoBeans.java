@@ -9,9 +9,11 @@ import Ejb.IngresoEjb;
 import Ejb.PersonaEjb;
 import Entidades.Cama;
 import Entidades.Persona;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -27,6 +29,8 @@ public class IngresoBeans {
     private Cama cama;
     private Persona persona;
     private Integer nss;
+    private Integer pacOc;
+    
 
     @EJB
     private IngresoEjb ejb;
@@ -63,8 +67,9 @@ public class IngresoBeans {
     }
 
     public String asignarCama() {
+        
         ejb.asignarCama(persona, cama);
-        return null;
+        return "ingreso.xhtml";
     }
 
     public void buscaPersona(ActionEvent action) {
@@ -77,8 +82,16 @@ public class IngresoBeans {
                 context.addMessage(null, new FacesMessage("Error","Esa persona ya tiene asignada una cama"));
             } else {
                 cama = ejb.primeraLibre(persona);
+                if (cama == null)
+                    context.addMessage(null, new FacesMessage("Error","No hay cama libre"));
             }
         }
+    }
+    
+    public String liberarCama (){
+        if(pacOc!=null)
+        ejb.liberarCama (pacOc);
+        return "ingreso.xhtml";
     }
 
     public Persona getPersona() {
@@ -88,5 +101,36 @@ public class IngresoBeans {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
+    
+    public List<Cama> camasOcupadas(){
+       return ejb.todasCamasOcupadas();
+    }
+
+    public Integer getPacOcuc() {
+        return pacOc;
+    }
+
+    public void setPacOcuc(Integer camaOcu) {
+        this.pacOc = camaOcu;
+    }
+
+    public IngresoEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(IngresoEjb ejb) {
+        this.ejb = ejb;
+    }
+
+    public PersonaEjb getPers() {
+        return pers;
+    }
+
+    public void setPers(PersonaEjb pers) {
+        this.pers = pers;
+    }
+
+
+    
 
 }
