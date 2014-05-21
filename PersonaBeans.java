@@ -10,8 +10,10 @@ import Ejb.PersonaEjb;
 import Entidades.HistoriaClinica;
 import Entidades.Persona;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -50,9 +52,12 @@ public class PersonaBeans {
         this.h = h;
     }
     
-    public String crearPersona() {
+    public void crearPersona(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
         h.setPersona(p);
-        persona.crearPersona(h);
-        return null;
+        PersonaEjb.Error error = persona.compruebaPersona(h);
+        if (error == PersonaEjb.Error.NSS_REPETIDO) {
+            context.addMessage(null, new FacesMessage("Error", "NSS Repetido"));
+        }
     }
 }
