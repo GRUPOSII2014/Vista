@@ -143,7 +143,7 @@ public class PersonaBeans {
         
         t.setSalario(new Float(2.0));
         t.setTipo(Enumerados.tipoTrabajador.ADMINISTRATIVO);
-        t.setDepartamento(todosDep().get(0));
+        
         h.setPersona(t);
         try {
             persona.crearPersona(h);
@@ -158,7 +158,7 @@ public class PersonaBeans {
         FacesContext context = FacesContext.getCurrentInstance();
         
         e.setTipo(Enumerados.tipoTrabajador.ENFERMERO);
-        e.setDepartamento(todosDep().get(0));
+        
         h.setPersona(e);
         try {
             persona.crearPersona(h);
@@ -174,7 +174,7 @@ public class PersonaBeans {
         
         m.setSalario(new Float(2.0));
         m.setTipo(Enumerados.tipoTrabajador.MEDICO);
-        m.setDepartamento(todosDep().get(0));
+       
         m.setPrecioHora(new Float(2.0));
         h.setPersona(m);
         try {
@@ -190,7 +190,7 @@ public class PersonaBeans {
         FacesContext context = FacesContext.getCurrentInstance();        
 
         a.setTipo(Enumerados.tipoTrabajador.ADMIN);
-        a.setDepartamento(todosDep().get(0));
+        
         h.setPersona(a);
         try {
             persona.crearPersona(h);
