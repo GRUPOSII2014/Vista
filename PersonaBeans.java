@@ -7,22 +7,25 @@
 package Vista;
 
 import Entidades.Persona;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import Ejb.PersonaEjb;
+import Entidades.HistoriaClinica;
+import javax.ejb.EJB;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Angel
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class PersonaBeans {
-    private Persona p=new Persona();
+    private Persona p = new Persona();
+    private HistoriaClinica h = new HistoriaClinica();
+    
+    @EJB
     private PersonaEjb ejb;
+    
     public PersonaBeans(){
        
     }
@@ -34,17 +37,27 @@ public class PersonaBeans {
     public void setP(Persona p) {
         this.p = p;
     }
-    public void crear(ActionEvent actionEvent){
-        PersonaEjb.Error error = ejb.compruebaPersona(p);
-        FacesContext context = FacesContext.getCurrentInstance();
-        if(error.equals(PersonaEjb.Error.DNI_REPETIDO)){
-            context.addMessage(null, new FacesMessage("Error", "El dni ya se encuentra en la base de datos"));
-        }else if (error.equals(PersonaEjb.Error.CORREO_REPETIDO)){
-            context.addMessage(null, new FacesMessage("Error", "El email ya se encuentra en la base de datos"));
-        }else if (error.equals(PersonaEjb.Error.NSS_REPETIDO)){
-            context.addMessage(null, new FacesMessage("Error", "El numero de seguridad social ya se encuentra en la base de datos"));
-        }else{
-            context.addMessage(null, new FacesMessage("Exito", "Persona Creada corectamente"));
-        }
+
+    public HistoriaClinica getH() {
+        return h;
+    }
+
+    public void setH(HistoriaClinica h) {
+        this.h = h;
+    }
+
+    public PersonaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(PersonaEjb ejb) {
+        this.ejb = ejb;
+    }
+        
+    public String crearPersona() {
+        System.out.println("Creando la Persona" + p.getNumSegSocial());
+        return "principal.xhtml";
+        //h.setPersona(p);
+        //ejb.crearPersona(h);
     }
 }
