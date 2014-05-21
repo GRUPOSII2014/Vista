@@ -11,14 +11,14 @@ import Entidades.Hospital;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Angel
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class CrearHospitalBean {
     private String nombre;
     private String direccion;
@@ -27,13 +27,13 @@ public class CrearHospitalBean {
     private Date horaApertura;
     private Date horaCierre;
     private String localizacion;
-    private Hospital hospital;
+    private Hospital hospital = new Hospital();
     
     @EJB
     private HospitalEjb ejb;
     
     public CrearHospitalBean(){
-        hospital=new Hospital();
+        
     }
 
     /**
@@ -43,14 +43,6 @@ public class CrearHospitalBean {
         return nombre;
     }
     
-    private Hospital getHospital(){
-        return hospital;
-    }
-    
-    private void setHospital(Hospital hospital){
-        this.hospital = hospital;
-    }
-
     /**
      * @param nombre the nombre to set
      */
@@ -151,6 +143,14 @@ public class CrearHospitalBean {
      */
     public void setLocalizacion(String localizacion) {
         this.localizacion = localizacion;
+    }
+
+    public HospitalEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(HospitalEjb ejb) {
+        this.ejb = ejb;
     }
     
 }
