@@ -34,61 +34,13 @@ public class HistoriaBean {
      * Creates a new instance of HistoriaBean
      */
     public HistoriaBean() {
-        /*
-        historia.setGrupoSanguineo("0");
-        historia.setObservaciones("Prueba");
-        historia.setFechaNacimiento(null);
-        Medico medico = new Medico();
-        medico.setPassword("micontraseña");
-        medico.setEmail("alberto@gmail.com");
-        medico.setNombre("Alberto");
-        medico.setApellido1("Sanchez");
-        medico.setApellido2("Muñoz");
-        medico.setDNI("23232314h");
-        medico.setNumSegSocial(1);
-        medico.setEstadoCivil("Casado");
-        medico.setPais("España");
-        medico.setCiudad("Malaga");
-        medico.setCodigoPostal(29009);
-        medico.setDireccion("Calle Pepito");
-        medico.setTelefono("954321123");
-        medico.setActivo(true);
-        medico.setSexo("V");
-        medico.setTipo(Enumerados.tipoTrabajador.MEDICO);
-        medico.setDespacho("3.3.3");
-
-        Informe i = new Informe();
-        i.setId(1);
-        i.setTipo(Enumerados.tipoInforme.INGRESO);
-        i.setFecha(Date.valueOf("1992-2-10"));
-        i.setMedico(medico);
-        i.setObservaciones("Se ha detectado una masa anomala adsasda sdas da sdas dasdasdada sdasdadasd asdasdads asdasdasd asdasdad asda sdasdasdas dasdasdasdasd en el estomago");
-        Informe i2 = new Informe();
-        i2.setId(2);
-        i2.setTipo(Enumerados.tipoInforme.INGRESO);
-        i2.setFecha(Date.valueOf("1992-2-10"));
-        i2.setMedico(medico);
-        i2.setObservaciones("La masa parece ser grasa acumulada");
-        ArrayList<Informe> segOp = new ArrayList<>();
-        segOp.add(i2);
-        i.setSegundasOpiniones(segOp);
-        Informe i3 = new Informe();
-        i3.setId(3);
-        i3.setTipo(Enumerados.tipoInforme.INGRESO);
-        i3.setFecha(Date.valueOf("1992-2-10"));
-        i3.setMedico(medico);
-        i3.setObservaciones("La masa parece ser grasa acumulada");
-        ArrayList<Informe> informes = new ArrayList<>();
-        informes.add(i);
-
-        informes.add(i3);
-        historia.setInformes(informes);
-                */
+        
     }
 
+    public void inic(){
+        historia = ejb.getHistoria(login.getNss());
+    }
     public HistoriaClinica getHistoria() {
-        if(historia == null)
-            historia = ejb.getHistoria(login.getBuscado());
         return historia;
     }
 
