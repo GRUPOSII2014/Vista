@@ -34,6 +34,7 @@ public class CitaBeansBeans {
 
     private Persona persona;
     private Integer medicoBuscado;
+    private Integer idEnfer;
     private List<Medico> medicosCabecera;
 
     private Urgencia urgencia;
@@ -47,6 +48,7 @@ public class CitaBeansBeans {
     private Enfermero enfermero;
     private Date fecha;
     private Cita cita;
+    
     @EJB
     private PersonaEjb ejbPersona;
     @EJB
@@ -55,10 +57,6 @@ public class CitaBeansBeans {
     private CrearCitaEjb ejbCita;
 
     public CitaBeansBeans() {
-    }
-
-    public String inic() {
-        return "Inic";
     }
 
     public Integer getMedicoBuscado() {
@@ -127,13 +125,14 @@ public class CitaBeansBeans {
 
     public void buscaPersona(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
+        enfermeros = ejbPersona.todosEnfermeros();
         persona = ejbPersona.getPersona(nss);
         if (persona == null) {
             context.addMessage(null, new FacesMessage("Error", "No se encuentra la persona en la base de datos"));
         } else {
             if (persona.getMedicoCabecera() == null) {
                 medicosCabecera = new ArrayList<>();
-                medicosCabecera.addAll(ejbPersona.medicos());
+                medicosCabecera.addAll(ejbPersona.todosMedicos());
             }
             context.addMessage(null, new FacesMessage("Info", "Persona encontrada"));
         }
@@ -147,6 +146,54 @@ public class CitaBeansBeans {
         c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
         c.setTrabajador(m);
         ejbCita.creaCita(c);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita"));
+    }
+
+    public Integer getIdEnfer() {
+        return idEnfer;
+    }
+
+    public void setIdEnfer(Integer idEnfer) {
+        this.idEnfer = idEnfer;
+    }
+
+    public PersonaEjb getEjbPersona() {
+        return ejbPersona;
+    }
+
+    public void setEjbPersona(PersonaEjb ejbPersona) {
+        this.ejbPersona = ejbPersona;
+    }
+
+    public CrearCitaEjb getEjbCita() {
+        return ejbCita;
+    }
+
+    public void setEjbCita(CrearCitaEjb ejbCita) {
+        this.ejbCita = ejbCita;
+    }
+    
+    
+    
+    public void crearCitaE(ActionEvent actionEvent){
+        Cita c = new Cita();
+        c.setTrabajador(ejbPersona.getTrabajador(idEnfer));
+        c.setAtendido(false);
+        c.setPersona(persona);
+        c.setTipoCita(Enumerados.tipoCita.ENFERMERIA);
+        ejbCita.creaCita(c);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita"));
+    }
+    
+    public void crearCitaU(ActionEvent actionEvent){
+        java.util.Random r = new java.util.Random();
+        Urgencia c = new Urgencia();
+        c.setAtendido(false);
+        c.setTrabajador(medicosCabecera.get(r.nextInt()%medicosCabecera.size()));
+        c.setPersona(persona);
+        ejbCita.crearUrgencia(c);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita"));
     }
@@ -211,36 +258,6 @@ public class CitaBeansBeans {
 
     public void setTiposCita(List<String> tiposCita) {
         this.tiposCita = tiposCita;
-    }
-
-    public String crearCitaD() {
-        cita.setPersona(persona);
-        cita.setAtendido(false);
-        cita.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
-        Medico m = persona.getMedicoCabecera();
-        cita.setTrabajador(m);
-        ejb1.crearCita(cita);
-        return null;
-    }
-
-    public String crearCitaE() {
-        cita.setPersona(persona);
-        cita.setAtendido(false);
-        cita.setTipoCita(Enumerados.tipoCita.ENFERMERIA);
-        cita.setTrabajador(enfermero);
-        ejb1.crearCita(cita);
-        return null;
-    }
-
-    public String crearUrgencia() {
-        urgencia.setFecha(fecha);
-        urgencia.setPersona(persona);
-        urgencia.setPersona(enfermero);
-        //Esto debería estar en la vista
-        urgencia.setEstado(Enumerados.estadoUrgencia.ESPERA);
-        urgencia.setTipo(Enumerados.tipoUrgencia.CORTE);
-        ejb1.crearUrgencia(urgencia);
-        return null;
     }
 
     /**
