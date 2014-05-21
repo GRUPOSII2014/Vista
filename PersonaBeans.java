@@ -51,9 +51,8 @@ public class PersonaBeans {
     }
     
     public String crearPersona() {
-        System.out.println("Entro!!!");
-        //h.setPersona(p);
-        //persona.crearPersona(h);
-        return "principal.xhtml";
+        h.setPersona(p);
+        persona.crearPersona(h);
+        return null;
     }
 }
