@@ -11,14 +11,11 @@ import Ejb.PersonaEjb;
 import Entidades.Cita;
 import Entidades.Enfermero;
 import Entidades.Enumerados;
-import Entidades.Horario;
 import Entidades.Medico;
 import Entidades.Persona;
 import Entidades.Urgencia;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -51,11 +48,11 @@ public class CitaBeansBeans {
     private Date fecha;
     private Cita cita;
     @EJB
-    private PersonaEjb ejb;
+    private PersonaEjb ejbPersona;
     @EJB
     private IngresoEjb ejb1;
     @EJB
-    private CrearCitaEjb ejb2;
+    private CrearCitaEjb ejbCita;
 
     public CitaBeansBeans() {
     }
@@ -81,19 +78,19 @@ public class CitaBeansBeans {
     }
 
     public CrearCitaEjb getEjb2() {
-        return ejb2;
+        return ejbCita;
     }
 
     public void setEjb2(CrearCitaEjb ejb2) {
-        this.ejb2 = ejb2;
+        this.ejbCita = ejb2;
     }
 
     public PersonaEjb getEjb() {
-        return ejb;
+        return ejbPersona;
     }
 
     public void setEjb(PersonaEjb ejb) {
-        this.ejb = ejb;
+        this.ejbPersona = ejb;
     }
 
     public IngresoEjb getEjb1() {
@@ -130,26 +127,43 @@ public class CitaBeansBeans {
 
     public void buscaPersona(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
-        persona = ejb.getPersona(nss);
+        persona = ejbPersona.getPersona(nss);
         if (persona == null) {
             context.addMessage(null, new FacesMessage("Error", "No se encuentra la persona en la base de datos"));
         } else {
             if (persona.getMedicoCabecera() == null) {
                 medicosCabecera = new ArrayList<>();
-                medicosCabecera.addAll(ejb.medicos());
+                medicosCabecera.addAll(ejbPersona.medicos());
             }
             context.addMessage(null, new FacesMessage("Info", "Persona encontrada"));
         }
     }
 
     public void crearCita(ActionEvent actionEvent) {
+        Cita c = new Cita();
+        Medico m = ejbPersona.getMedico(medicoBuscado);
+        c.setFecha(ejbCita.asignaCita(m));
+        c.setAtendido(false);
+        c.setPersona(persona);
+        c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
+        ArrayList<Cita> citas = new ArrayList<>();
+        ArrayList<Cita> citas2 = new ArrayList<>();
+        citas2.addAll(m.getCitas());
+        citas2.add(c);
+        citas.addAll(persona.getCitas());
+        citas.add(c);
+        persona.setCitas(citas);
+        m.setCitas(citas2);
+        ejbPersona.actualizaMedico(m);
+        ejbPersona.actualizaPersona(persona);
+        ejbCita.creaCita(c);
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Error", "El dni ya se encuentra en la base de datos"));
+        context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita "+c.getFecha().toString()));
     }
 
     public String asignaMedico() {
-        persona.setMedicoCabecera(ejb.getMedico(medicoBuscado));
-        ejb.actualizaPersona(persona);
+        persona.setMedicoCabecera(ejbPersona.getMedico(medicoBuscado));
+        ejbPersona.actualizaPersona(persona);
         return "null";
     }
 
