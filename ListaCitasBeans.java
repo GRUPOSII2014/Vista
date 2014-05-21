@@ -100,7 +100,7 @@ public class ListaCitasBeans {
         return 2;
     }
     public String eliminar(Cita c){
-        citas.remove(c);
+        ejb.cancelarCita(c);
         return "null";
     }
     
