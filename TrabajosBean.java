@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+
 /**
  *
  * @author PyRoS
@@ -41,12 +42,14 @@ public class TrabajosBean {
     
     public String doDiagnostico(Cita cita){
         login.setBuscado(cita.getPersona().getNumSegSocial());
+        trabajos.avanvaCita(cita);
         return "Diagnostico";
     }
    
     
     public String doTratar(Cita c){
         login.setBuscado(c.getPersona().getNumSegSocial());
+        trabajos.avanvaCita(c);
         return "tratamiento";
     }
 

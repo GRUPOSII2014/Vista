@@ -142,7 +142,7 @@ public class DiagnosticoBeans {
         Medico me = pers.getMedico(login.getNss());
         trata.setTipo(Enumerados.tipoTratamiento.valueOf(var2));
         trata.setPersona(p1);
-        diag.creaTratamiento(trata);
+        
         informe.setTratamiento(trata);
         informe.setMedico(me);
         informe.setFecha(Calendar.getInstance().getTime());
@@ -168,8 +168,19 @@ public class DiagnosticoBeans {
                 }
             }
         } 
-        pers.actualizaHistoriaClinica(c);
-        return "Trabajo.xhtml";
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(trata.getFechaInicio());
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(trata.getFechaFinalizacion());
+        if(cal.before(c2)){
+            diag.creaTratamiento(trata);
+            pers.actualizaHistoriaClinica(c);
+            return "Trabajo.xhtml";
+        }else{
+            return "null";
+        }
+        
+        
     }
 
     public int getVar3() {
@@ -280,13 +291,5 @@ public class DiagnosticoBeans {
         this.diag = diag;
     }
     
-    public int mirarFechas(){
-        Calendar c = Calendar.getInstance();
-        c.setTime(trata.getFechaInicio());
-        Calendar c2 = Calendar.getInstance();
-        c2.setTime(trata.getFechaFinalizacion());
-        if(c.before(c2)) return 1;
-        return 0;
-    }
 }
 

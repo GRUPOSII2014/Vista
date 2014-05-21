@@ -7,6 +7,8 @@
 package Vista;
 
 import Ejb.crearCamaEjb;
+import Entidades.Cama;
+import Entidades.Enumerados;
 import Entidades.Habitacion;
 import java.util.List;
 import javax.ejb.EJB;
@@ -19,10 +21,16 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class crearCama {
+public class CrearCama {
    private Entidades.Cama c;
+   private Long habi;
    @EJB
    private Ejb.crearCamaEjb ejb;
+   
+   
+   public CrearCama(){
+       c = new Cama();
+   }
     /**
      * @return the c
      */
@@ -30,6 +38,14 @@ public class crearCama {
         return c;
     }
 
+    public Long getHabi() {
+        return habi;
+    }
+
+    public void setHabi(Long habi) {
+        this.habi = habi;
+    }
+    
     /**
      * @param c the c to set
      */
@@ -38,8 +54,17 @@ public class crearCama {
     }
     
     public String crearCama (){
+        for(Habitacion h : todasHabitaciones()){
+            if(h.getId().equals(habi)){
+                c.setHabitacion(h);
+                break;
+            }
+        }
+        c.setEstado(Enumerados.estadoCama.LIBRE);
         ejb.comprobarCama(c);
-        return null;
+        
+        c = new Cama();
+        return "principal.xhtml";
     }
     
     public List <Habitacion> todasHabitaciones(){

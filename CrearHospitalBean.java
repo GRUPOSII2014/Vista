@@ -101,6 +101,7 @@ public class CrearHospitalBean {
     public String crearHospital(){
         hospital.setNombre(nombre);
         hospital.setCiudad(ciudad);
+        hospital.setDireccion(direccion);
         hospital.setCodigoPostal(codigoPostal);
         hospital.setLocalizacion(localizacion);
         ejb.crearHospital(hospital);

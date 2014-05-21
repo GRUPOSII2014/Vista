@@ -46,13 +46,13 @@ public class IndexController {
         
         if (p != null) {
             login.setNss(p.getNumSegSocial());
-            if (!p.getDisc().equalsIgnoreCase("A")) {
+            /*if (!p.getDisc().equalsIgnoreCase("A")) {
                 if (p.getDisc().equalsIgnoreCase("P")) 
                     login.setTipoUsuario(p.getDisc());
                 else {
                     login.setTipoUsuario(persona.getDiscriminador(p.getNumSegSocial()));
                 }
-            } else
+            } else*/
                 login.setTipoUsuario(p.getDisc());
         } else {
             FacesContext context = FacesContext.getCurrentInstance();

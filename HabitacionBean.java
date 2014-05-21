@@ -24,11 +24,9 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class HabitacionBean {
-    private Long id;
-    private Integer numero;
     private Long planta;
-    private Enumerados.tipoHabitacion tipo;
     private Habitacion habitacion;
+    private List<Planta> plantas ;
     
     @EJB
     private HospitalEjb ejb;
@@ -36,19 +34,6 @@ public class HabitacionBean {
     
     public HabitacionBean(){
         habitacion = new Habitacion();
-    }
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getPlanta() {
@@ -76,45 +61,28 @@ public class HabitacionBean {
     public void setEjb(HospitalEjb ejb) {
         this.ejb = ejb;
     }
+
+    public void setPlantas(List<Planta> plantas) {
+        this.plantas = plantas;
+    }
     
     
     public List<Planta> getPlantas(){
-        return ejb.getPlantas();
+        plantas = ejb.getPlantas();
+        return plantas;
     }
 
-    /**
-     * @return the numero
-     */
-    public Integer getNumero() {
-        return numero;
-    }
-
-    /**
-     * @param numero the numero to set
-     */
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    
-    public Enumerados.tipoHabitacion getTipo(){
-        return tipo;
-    }
-    
-    public void setTipo(Enumerados.tipoHabitacion tipo){
-        this.tipo = tipo;
-    }
     
     public String crearHabitacion(){
-        for(Planta p : ejb.getPlantas()){
-            if(p.getId()==planta){
+        for(Planta p : plantas){
+            if(p.getId().equals(planta)){
                 habitacion.setPlanta(p);
                 break;
             }
         }
-        
-              return "principal.xhtml";
-        //ejb.crearHabitacion(habitacion);
-  
+        ejb.crearHabitacion(habitacion);
+        plantas = new ArrayList<>();
+        habitacion = new Habitacion();
+        return "null";
     }
 }
