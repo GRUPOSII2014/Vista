@@ -6,9 +6,13 @@
 
 package Vista;
 
+import Ejb.CrearDepartamentoEjb;
 import Ejb.PersonaEjb;
+import Entidades.Departamento;
 import Entidades.HistoriaClinica;
 import Entidades.Persona;
+import Entidades.TrabajadoresHospital;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
@@ -25,11 +29,16 @@ import javax.faces.event.ActionEvent;
 @RequestScoped
 public class PersonaBeans {
 
-    Persona p = new Persona();
-    HistoriaClinica h = new HistoriaClinica();
+    private Persona p = new Persona();
+    private TrabajadoresHospital t = new TrabajadoresHospital();
+    private HistoriaClinica h = new HistoriaClinica();
+    private String dep;
     
     @EJB
     private PersonaEjb persona;
+    
+    @EJB
+    private CrearDepartamentoEjb depart;
     
     /**
      * Creates a new instance of PersonaBeans
@@ -39,6 +48,22 @@ public class PersonaBeans {
 
     public Persona getP() {
         return p;
+    }
+
+    public CrearDepartamentoEjb getDepart() {
+        return depart;
+    }
+
+    public void setDepart(CrearDepartamentoEjb depart) {
+        this.depart = depart;
+    }
+
+    public String getDep() {
+        return dep;
+    }
+
+    public void setDep(String dep) {
+        this.dep = dep;
     }
 
     public void setP(Persona p) {
@@ -51,6 +76,22 @@ public class PersonaBeans {
 
     public void setH(HistoriaClinica h) {
         this.h = h;
+    }
+
+    public TrabajadoresHospital getT() {
+        return t;
+    }
+
+    public void setT(TrabajadoresHospital t) {
+        this.t = t;
+    }
+
+    public PersonaEjb getPersona() {
+        return persona;
+    }
+
+    public void setPersona(PersonaEjb persona) {
+        this.persona = persona;
     }
     
     public void crearPersona(ActionEvent actionEvent) {
@@ -65,4 +106,22 @@ public class PersonaBeans {
         
         context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada"));
     }
+    
+    public void crearAdministrativo(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        h.setPersona(t);
+        try {
+            persona.crearPersona(h);
+        } catch(EJBException ex) {
+            context.addMessage(null, new FacesMessage("Error", "Violada la restricción de clave unica en NSS, DNI o Email"));
+        }
+        
+        context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada"));
+    }
+    
+    public List<Departamento> todosDep() {
+        return depart.todosDepartamentos();
+    }
+    
 }
