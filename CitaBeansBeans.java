@@ -36,13 +36,13 @@ import javax.faces.event.ActionEvent;
 public class CitaBeansBeans {
 
     private Persona persona;
-    private Medico medicoBuscado;
+    private Integer medicoBuscado;
     private List<Medico> medicosCabecera;
-    
+
     private Urgencia urgencia;
     private Integer nss;
     private String tipocita;
-    
+
     private List<Date> horas;
     private List<String> tiposCita;
     private String dias;
@@ -56,32 +56,19 @@ public class CitaBeansBeans {
     private IngresoEjb ejb1;
     @EJB
     private CrearCitaEjb ejb2;
-    
-    
 
     public CitaBeansBeans() {
     }
-    
-    public String inic(){
-        medicosCabecera = new ArrayList<>();
-        medicosCabecera.addAll(ejb.medicos());
-        horas = null;
-        tiposCita = new ArrayList<>();
-        tiposCita.add("Enfermeria");
-        tiposCita.add("Diagnostico");
-        tiposCita.add("Cirugía");
-        dias = "lunes, martes, miercoles";
-        cita = new Cita();
-        urgencia = new Urgencia();
-        enfermeros = ejb.todosEnfermeros();
+
+    public String inic() {
         return "Inic";
     }
 
-    public Medico getMedicoBuscado() {
+    public Integer getMedicoBuscado() {
         return medicoBuscado;
     }
 
-    public void setMedicoBuscado(Medico medicoBuscado) {
+    public void setMedicoBuscado(Integer medicoBuscado) {
         this.medicoBuscado = medicoBuscado;
     }
 
@@ -100,7 +87,7 @@ public class CitaBeansBeans {
     public void setEjb2(CrearCitaEjb ejb2) {
         this.ejb2 = ejb2;
     }
-    
+
     public PersonaEjb getEjb() {
         return ejb;
     }
@@ -116,9 +103,7 @@ public class CitaBeansBeans {
     public void setEjb1(IngresoEjb ejb1) {
         this.ejb1 = ejb1;
     }
-    
-    
-    
+
     public Date getFecha() {
         return fecha;
     }
@@ -143,22 +128,31 @@ public class CitaBeansBeans {
         this.tipocita = tipocita;
     }
 
-    public String buscaPersona() {
+    public void buscaPersona(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();
         persona = ejb.getPersona(nss);
-        return "null";
+        if (persona == null) {
+            context.addMessage(null, new FacesMessage("Error", "No se encuentra la persona en la base de datos"));
+        } else {
+            if (persona.getMedicoCabecera() == null) {
+                medicosCabecera = new ArrayList<>();
+                medicosCabecera.addAll(ejb.medicos());
+            }
+            context.addMessage(null, new FacesMessage("Info", "Persona encontrada"));
+        }
     }
-    
-    public void crearCita(ActionEvent actionEvent){
+
+    public void crearCita(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Error", "El dni ya se encuentra en la base de datos"));
     }
 
-    public String asignaMedico(){
-        persona.setMedicoCabecera(medicoBuscado);
+    public String asignaMedico() {
+        persona.setMedicoCabecera(ejb.getMedico(medicoBuscado));
         ejb.actualizaPersona(persona);
         return "null";
     }
-    
+
     public Enfermero getEnfermero() {
         return enfermero;
     }
@@ -183,14 +177,14 @@ public class CitaBeansBeans {
         this.nss = nss;
     }
 
-    public List<Enfermero> getEnfermeros(){
+    public List<Enfermero> getEnfermeros() {
         return enfermeros;
     }
-    
-    public void setEnfermeros(List<Enfermero> enfermeros){
+
+    public void setEnfermeros(List<Enfermero> enfermeros) {
         this.enfermeros = enfermeros;
     }
-    
+
     public List<Medico> getMedicosCabecera() {
         return medicosCabecera;
     }
@@ -225,8 +219,8 @@ public class CitaBeansBeans {
         ejb1.crearCita(cita);
         return null;
     }
-    
-    public String crearCitaE(){
+
+    public String crearCitaE() {
         cita.setFecha(fecha);
         cita.setPersona(persona);
         cita.setAtendido(false);
@@ -235,8 +229,8 @@ public class CitaBeansBeans {
         ejb1.crearCita(cita);
         return null;
     }
-    
-    public String crearUrgencia(){
+
+    public String crearUrgencia() {
         urgencia.setFecha(fecha);
         urgencia.setPersona(persona);
         urgencia.setPersona(enfermero);
