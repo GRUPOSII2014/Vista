@@ -25,7 +25,8 @@ import javax.faces.bean.ViewScoped;
 public class ListaCitasBeans {
         private Date fecha;
         private List<Cita> citas = new ArrayList<>();
-        private List<Cita> espera = new ArrayList<>();
+        private Integer pos ;
+        private String descripcion;
         @EJB
         private CitaEjb ejb;
         @ManagedProperty(value = "#{loginController}")
@@ -58,8 +59,20 @@ public class ListaCitasBeans {
     
     public void inic (){
         citas.addAll(ejb.citasDePersona(login.getNss()));
+        pos =  ejb.citasPorDelante(login.getNss());
+        if(pos == -1) descripcion = "No estas a la espera de una cita";
+        else if (pos == 0) descripcion = "El siguiente a la espera de una cita eres tu";
+        else descripcion = "Aun tienes "+ pos + " personas por delante de ti";
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
     public Date getFecha() {
         return fecha;
     }
@@ -76,14 +89,14 @@ public class ListaCitasBeans {
         this.citas = citas;
     }
 
-    public List<Cita> getEspera() {
-        return espera;
+    public Integer getPos() {
+        return pos;
     }
 
-    public void setEspera(List<Cita> espera) {
-        this.espera = espera;
+    public void setPos(Integer pos) {
+        this.pos = pos;
     }
-
+    
     public int getPosicion(Cita c){
         return 2;
     }
