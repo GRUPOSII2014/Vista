@@ -10,6 +10,7 @@ import Ejb.PersonaEjb;
 import Entidades.HistoriaClinica;
 import Entidades.Persona;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -54,10 +55,14 @@ public class PersonaBeans {
     
     public void crearPersona(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
+        
         h.setPersona(p);
-        PersonaEjb.Error error = persona.compruebaPersona(h);
-        if (error == PersonaEjb.Error.NSS_REPETIDO) {
-            context.addMessage(null, new FacesMessage("Error", "NSS Repetido"));
+        try {
+            persona.crearPersona(h);
+        } catch(EJBException ex) {
+            context.addMessage(null, new FacesMessage("Error", "Violada la restricción de clave unica en NSS, DNI o Email"));
         }
+        
+        context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada"));
     }
 }

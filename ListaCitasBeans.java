@@ -56,10 +56,9 @@ public class ListaCitasBeans {
         this.ejb = ejb;
     }
     
-    
     public void inic (){
-        //citas.addAll(ejb.citasDePersona(login.getNss()));
-        //pos =  ejb.citasPorDelante(login.getNss());
+        citas.addAll(ejb.citasDePersona(login.getNss()));
+        pos =  ejb.citasPorDelante(login.getNss());
         if(pos == -1) descripcion = "No estas a la espera de una cita";
         else if (pos == 0) descripcion = "El siguiente a la espera de una cita eres tu";
         else descripcion = "Aun tienes "+ pos + " personas por delante de ti";
