@@ -141,20 +141,11 @@ public class CitaBeansBeans {
 
     public void crearCita(ActionEvent actionEvent) {
         Cita c = new Cita();
-        Medico m = ejbPersona.getMedico(medicoBuscado);
+        Medico m = persona.getMedicoCabecera();
         c.setAtendido(false);
         c.setPersona(persona);
         c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
-        ArrayList<Cita> citas = new ArrayList<>();
-        ArrayList<Cita> citas2 = new ArrayList<>();
-        citas2.addAll(m.getCitas());
-        citas2.add(c);
-        citas.addAll(persona.getCitas());
-        citas.add(c);
-        persona.setCitas(citas);
-        m.setCitas(citas2);
-        ejbPersona.actualizaMedico(m);
-        ejbPersona.actualizaPersona(persona);
+        c.setTrabajador(m);
         ejbCita.creaCita(c);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita"));
