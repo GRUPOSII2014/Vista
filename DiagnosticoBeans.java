@@ -60,9 +60,8 @@ public class DiagnosticoBeans {
     public DiagnosticoBeans() {
     }
 
-    public String inic(){
+    public void inic(){
         p1 = pers.getPersona(2); // Cambiar a pers.buscado()
-        return "Inic";
     }
 
     public int getVar() {
@@ -96,11 +95,6 @@ public class DiagnosticoBeans {
 
     public void setP1(Persona p1) {
         this.p1 = p1;
-    }
-    
-    public Persona getPersona() {
-
-        return this.p1;
     }
 
     public List<Medicamento> getMedicamentos() {

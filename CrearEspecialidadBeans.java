@@ -31,10 +31,6 @@ public class CrearEspecialidadBeans {
     @EJB
     private CrearEspecialidadEjb especialidad;
     
-    
-    public CrearEspecialidadBeans(){};
-
-    
     public String getNombre() {
         return nombre;
     }

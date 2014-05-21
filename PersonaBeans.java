@@ -6,34 +6,38 @@
 
 package Vista;
 
-import Entidades.Persona;
-import javax.faces.bean.ManagedBean;
 import Ejb.PersonaEjb;
 import Entidades.HistoriaClinica;
+import Entidades.Persona;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
 
 /**
  *
- * @author Angel
+ * @author Emilio
  */
 @ManagedBean
 @RequestScoped
 public class PersonaBeans {
-    private Persona p = new Persona();
-    private HistoriaClinica h = new HistoriaClinica();
+
+    Persona p = new Persona();
+    HistoriaClinica h = new HistoriaClinica();
     
     @EJB
-    private PersonaEjb ejb;
+    private PersonaEjb persona;
     
-    public PersonaBeans(){
-       
+    /**
+     * Creates a new instance of PersonaBeans
+     */
+    public PersonaBeans() {
     }
 
     public Persona getP() {
         return p;
     }
-    
+
     public void setP(Persona p) {
         this.p = p;
     }
@@ -45,19 +49,10 @@ public class PersonaBeans {
     public void setH(HistoriaClinica h) {
         this.h = h;
     }
-
-    public PersonaEjb getEjb() {
-        return ejb;
-    }
-
-    public void setEjb(PersonaEjb ejb) {
-        this.ejb = ejb;
-    }
-        
+    
     public String crearPersona() {
-        System.out.println("Creando la Persona" + p.getNumSegSocial());
-        return "principal.xhtml";
-        //h.setPersona(p);
-        //ejb.crearPersona(h);
+        h.setPersona(p);
+        persona.crearPersona(h);
+        return null;
     }
 }
