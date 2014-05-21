@@ -56,7 +56,6 @@ public class ListaCitasBeans {
         this.ejb = ejb;
     }
     
-    
     public void inic (){
         citas.addAll(ejb.citasDePersona(login.getNss()));
         pos =  ejb.citasPorDelante(login.getNss());
