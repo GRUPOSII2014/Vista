@@ -6,12 +6,14 @@
 
 package Vista;
 
+import Ejb.CitaEjb;
 import Entidades.Cita;
-import Entidades.Enumerados;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -24,40 +26,38 @@ public class ListaCitasBeans {
         private Date fecha;
         private List<Cita> citas = new ArrayList<>();
         private List<Cita> espera = new ArrayList<>();
+        @EJB
+        private CitaEjb ejb;
+        @ManagedProperty(value = "#{loginController}")
+        private LoginController login;
     /**
      * Creates a new instance of ListaCitas
      */
     public ListaCitasBeans() {
-      inic();
 
     }
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+
+    
+    
+    public CitaEjb getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(CitaEjb ejb) {
+        this.ejb = ejb;
+    }
+    
     
     public void inic (){
-         Cita c = new Cita();
-        c.setFecha(new Date());
-        c.setAtendido(false);
-        c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
-        citas.add(c);
-        c = new Cita();
-        c.setFecha(new Date());
-        c.setAtendido(false);
-        c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
-        citas.add(c);
-        c = new Cita();
-        c.setFecha(new Date());
-        c.setAtendido(false);
-        c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
-        citas.add(c);
-        c = new Cita();
-        c.setFecha(new Date());
-        c.setAtendido(false);
-        c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
-        espera.add(c);
-        c = new Cita();
-        c.setFecha(new Date());
-        c.setAtendido(false);
-        c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
-        espera.add(c);
+        citas.addAll(ejb.citasDePersona(login.getNss()));
     }
 
     public Date getFecha() {
