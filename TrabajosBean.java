@@ -8,7 +8,6 @@ package Vista;
 
 import Ejb.CitaEjb;
 import Entidades.Cita;
-import Entidades.Urgencia;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -22,8 +21,7 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class TrabajosBean {
-
-    private Urgencia urge;
+ 
     @EJB
     private CitaEjb trabajos;
     @ManagedProperty(value = "#{loginController}")
@@ -36,41 +34,19 @@ public class TrabajosBean {
        
     }
 
-    public Urgencia getUrge() {
-        return urge;
-    }
-
-    public void setUrge(Urgencia urge) {
-        this.urge = urge;
-    }
-
     public List<Cita> listadoCitas(Integer nss) {
         return trabajos.citasNoAtendidas(nss);
     }
 
-    public List<Urgencia> listadoUrgencias(Integer nss) {
-        return trabajos.urgenciasEspera(nss);
-    }
     
     public String doDiagnostico(Cita cita){
         login.setBuscado(cita.getPersona().getNumSegSocial());
         return "Diagnostico";
     }
-    
-    public String doDiagnosticoUrgencia(Urgencia u){
-        //trabajos.avanzaAtendiendo(u);
-        login.setBuscado(u.getPersona().getNumSegSocial());
-        return "Diagnostico";
-    }
+   
     
     public String doTratar(Cita c){
         login.setBuscado(c.getPersona().getNumSegSocial());
-        return "tratamiento";
-    }
-    
-    public String doTratarUrgencia(Urgencia u){
-        login.setBuscado(u.getPersona().getNumSegSocial());
-        //trabajos.avanzaTratamiento(u);
         return "tratamiento";
     }
 
