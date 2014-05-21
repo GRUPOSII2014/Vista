@@ -10,8 +10,11 @@ import Ejb.PersonaEjb;
 import Entidades.Cama;
 import Entidades.Persona;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -24,7 +27,7 @@ public class IngresoBeans {
     private Cama cama;
     private Persona persona;
     private Integer nss;
-    
+
     @EJB
     private IngresoEjb ejb;
     @EJB
@@ -32,47 +35,50 @@ public class IngresoBeans {
 
     public IngresoBeans() {
         /*ArrayList<Cama> camas = new ArrayList<>();
-        Habitacion h = new Habitacion();
-        Planta p = new Planta();
-        cama = new Cama();
-        cama.setId(1L);
-        //cama.setHabitacion(h);
-        cama.setEstado(Enumerados.estadoCama.LIBRE);
-        camas.add(cama);
-        //h.setCamas(camas);
-        h.setId(1L);
-        h.setTipo(Enumerados.tipoHabitacion.UVI);
-        h.setPlanta(p);
-        p.setId(1L);
-        p.setNombre("una planta");*/
+         Habitacion h = new Habitacion();
+         Planta p = new Planta();
+         cama = new Cama();
+         cama.setId(1L);
+         //cama.setHabitacion(h);
+         cama.setEstado(Enumerados.estadoCama.LIBRE);
+         camas.add(cama);
+         //h.setCamas(camas);
+         h.setId(1L);
+         h.setTipo(Enumerados.tipoHabitacion.UVI);
+         h.setPlanta(p);
+         p.setId(1L);
+         p.setNombre("una planta");*/
     }
-    
-    public String inic(){
-        cama = ejb.primeraLibre(persona);
-        return "inic";
-    }
-    
-    public Integer getNss(){
+
+    public Integer getNss() {
         return nss;
     }
-    
-    public void setNss(Integer nss){
+
+    public void setNss(Integer nss) {
         this.nss = nss;
     }
 
     public Cama getCama() {
         return cama;
     }
-    
-    public String asignarCama(){
+
+    public String asignarCama() {
         ejb.asignarCama(persona, cama);
         return null;
     }
-    
-    public String buscaPersona(){
+
+    public void buscaPersona(ActionEvent action) {
+        FacesContext context = FacesContext.getCurrentInstance();
         persona = pers.getPersona(nss);
-        return "null";
-        
+        if (persona == null) {
+            context.addMessage(null, new FacesMessage("Error", "No se encuentra la persona en la base de datos"));
+        } else {
+            if (persona.getCama() != null) {
+                context.addMessage(null, new FacesMessage("Error","Esa persona ya tiene asignada una cama"));
+            } else {
+                cama = ejb.primeraLibre(persona);
+            }
+        }
     }
 
     public Persona getPersona() {
@@ -82,5 +88,5 @@ public class IngresoBeans {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    
+
 }
