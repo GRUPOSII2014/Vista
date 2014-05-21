@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package vista;
+package Vista;
 
 import Ejb.CrearEspecialidadEjb;
 import Entidades.Especialidad;
