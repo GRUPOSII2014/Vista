@@ -110,14 +110,15 @@ public class PersonaBeans {
     public void crearAdministrativo(ActionEvent actionEvent) {
         FacesContext context = FacesContext.getCurrentInstance();
         
+        t.setDepartamento(todosDep().get(0));
         h.setPersona(t);
-        try {
+        //try {
             persona.crearPersona(h);
-        } catch(EJBException ex) {
+        /*} catch(EJBException ex) {
             context.addMessage(null, new FacesMessage("Error", "Violada la restricción de clave unica en NSS, DNI o Email"));
         }
         
-        context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada"));
+        context.addMessage(null, new FacesMessage("Exito", "La persona ha sido creada"));*/
     }
     
     public List<Departamento> todosDep() {
