@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
-package vista;
+package Vista;
 
 import Ejb.CrearEspecialidadEjb;
 import Entidades.Especialidad;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -21,20 +22,60 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class CrearEspecialidadBeans {
     
+    
+    private String nombre, descripcion;
+    
+    @ManagedProperty(value = "#{loginController}")
+    private Vista.LoginController login;
+    
     @EJB
-    private CrearEspecialidadEjb ejb;
+    private CrearEspecialidadEjb especialidad;
     
-    private Especialidad e;
     
-     public Especialidad getE() {
-        return e;
+    public CrearEspecialidadBeans(){};
+
+    
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setE(Especialidad e) {
-        this.e = e;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
+    public CrearEspecialidadEjb getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(CrearEspecialidadEjb especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    
     public String crearEspecialidad (){
+        Especialidad e = new Especialidad();
+        e.setNombre(nombre);
+        e.setDescripcion(descripcion);
+        especialidad.crearEspecialidad(e);
+        
         return null;
     }    
+
+    public LoginController getLogin() {
+        return login;
+    }
+
+    public void setLogin(LoginController login) {
+        this.login = login;
+    }
+    
+    
 }
