@@ -142,7 +142,6 @@ public class CitaBeansBeans {
     public void crearCita(ActionEvent actionEvent) {
         Cita c = new Cita();
         Medico m = ejbPersona.getMedico(medicoBuscado);
-        c.setFecha(ejbCita.asignaCita(m));
         c.setAtendido(false);
         c.setPersona(persona);
         c.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
@@ -158,7 +157,7 @@ public class CitaBeansBeans {
         ejbPersona.actualizaPersona(persona);
         ejbCita.creaCita(c);
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita "+c.getFecha().toString()));
+        context.addMessage(null, new FacesMessage("Exito", "Se ha concedido una cita"));
     }
 
     public String asignaMedico() {
@@ -224,7 +223,6 @@ public class CitaBeansBeans {
     }
 
     public String crearCitaD() {
-        cita.setFecha(fecha);
         cita.setPersona(persona);
         cita.setAtendido(false);
         cita.setTipoCita(Enumerados.tipoCita.DIAGNOSTICO);
@@ -235,7 +233,6 @@ public class CitaBeansBeans {
     }
 
     public String crearCitaE() {
-        cita.setFecha(fecha);
         cita.setPersona(persona);
         cita.setAtendido(false);
         cita.setTipoCita(Enumerados.tipoCita.ENFERMERIA);

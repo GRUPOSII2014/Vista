@@ -49,9 +49,8 @@ public class MisDatosControlerBeans {
         this.medico = medico;
     }
     
-    public String inic(){
+    public void inic(){
         persona=ejb.getPersona(login.getBuscado());
-        return "Inic";
     }
     
     public Persona getPersona() {
@@ -73,19 +72,6 @@ public class MisDatosControlerBeans {
 
     public void setLogin(LoginController login) {
         this.login = login;
-    }
-    
-    public String horarioMedicoCabecera(){
-        StringBuilder sb = new StringBuilder();
-        if(persona.getMedicoCabecera()!=null){
-            for (Horario h : persona.getMedicoCabecera().getHorarios()){
-                sb.append(h.getDia()).append(", ");
-            }
-            return sb.toString().substring(0,sb.length()-2)+".";
-        }else{
-            return "";
-        }
-        
     }
 
     public PersonaEjb getEjb() {
