@@ -50,11 +50,6 @@ public class IngresoBeans {
          p.setNombre("una planta");*/
     }
 
-    public String inic() {
-        cama = ejb.primeraLibre(persona);
-        return "inic";
-    }
-
     public Integer getNss() {
         return nss;
     }
@@ -80,6 +75,8 @@ public class IngresoBeans {
         } else {
             if (persona.getCama() != null) {
                 context.addMessage(null, new FacesMessage("Error","Esa persona ya tiene asignada una cama"));
+            } else {
+                cama = ejb.primeraLibre(persona);
             }
         }
     }
