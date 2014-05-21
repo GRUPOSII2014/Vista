@@ -139,9 +139,7 @@ public class DiagnosticoBeans {
     
     public String terminarDiagnostico(){
         //login.setBuscado(login.getNss()); //paciente
-        Medico me = new Medico();
-        me.setNumSegSocial(login.getNss());
-        login.setBuscado(2);
+        Medico me = pers.getMedico(login.getNss());
         trata.setTipo(Enumerados.tipoTratamiento.valueOf(var2));
         trata.setPersona(p1);
         diag.creaTratamiento(trata);
@@ -149,15 +147,28 @@ public class DiagnosticoBeans {
         informe.setMedico(me);
         informe.setFecha(Calendar.getInstance().getTime());
         informe.setTipo(Enumerados.tipoInforme.DIAGNOSTICO);       
+        HistoriaClinica c = p1.getHistoriaclinica();
+        ArrayList<Informe> informess = new ArrayList<>();
+        informess.addAll(c.getInformes());
         
+        c.setInformes(informess);
+ 
         if(var==0){
-            diag.anadeInf(informe);
+            informess.add(informe);
+            c.setInformes(informess);
         }else{
-            List<Informe> segundasopiniones = new ArrayList<>();
-            segundasopiniones.add(informe);
-            informe.setSegundasOpiniones(segundasopiniones);
-            diag.anadeSegOp(informe);
+            Informe i = informes.get(var-1);
+            ArrayList<Informe> segOpinf = new ArrayList<>();
+            segOpinf.addAll(i.getSegundasOpiniones());
+            segOpinf.add(informe);
+            for(Informe i2 : c.getInformes()){
+                if(i2.getId()==i.getId()){
+                    i2.setSegundasOpiniones(segOpinf);
+                    break;
+                }
+            }
         } 
+        pers.actualizaHistoriaClinica(c);
         return "Trabajo.xhtml";
     }
 
@@ -269,6 +280,13 @@ public class DiagnosticoBeans {
         this.diag = diag;
     }
     
-    
+    public int mirarFechas(){
+        Calendar c = Calendar.getInstance();
+        c.setTime(trata.getFechaInicio());
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(trata.getFechaFinalizacion());
+        if(c.before(c2)) return 1;
+        return 0;
+    }
 }
 
