@@ -61,7 +61,7 @@ public class DiagnosticoBeans {
     }
 
     public void inic(){
-        p1 = pers.getPersona(2); // Cambiar a pers.buscado()
+        p1 = pers.getPersona(login.getBuscado()); // Cambiar a pers.buscado()
     }
 
     public int getVar() {
@@ -149,7 +149,8 @@ public class DiagnosticoBeans {
         informe.setTipo(Enumerados.tipoInforme.DIAGNOSTICO);       
         HistoriaClinica c = p1.getHistoriaclinica();
         ArrayList<Informe> informess = new ArrayList<>();
-        informess.addAll(c.getInformes());
+        if(c.getInformes() != null)
+            informess.addAll(c.getInformes()); 
         
         c.setInformes(informess);
  

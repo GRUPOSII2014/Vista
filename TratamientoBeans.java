@@ -14,14 +14,15 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 
-@RequestScoped
+@ViewScoped
 @ManagedBean
 public class TratamientoBeans {
 
     private Tratamiento tratamiento;
+    private String obs = "";
     private List <Cantidad> listaCant;
     private Persona persona;
     @EJB
@@ -35,11 +36,11 @@ public class TratamientoBeans {
     public TratamientoBeans() {
     }
 
-    public boolean inic(){
+    public void inic(){
         persona = pers.getPersona(login.getBuscado());
-        tratamiento = persona.getTratamiento().get(persona.getTratamiento().size()-1);
+        List<Tratamiento> lista = persona.getTratamiento();
+        tratamiento = lista.get((persona.getTratamiento().isEmpty() ? 0:persona.getTratamiento().size()-1));
         listaCant = tratamiento.getCantidades();
-        return true;
     }
     /**
      * @return the t
@@ -48,6 +49,15 @@ public class TratamientoBeans {
         return tratamiento;
     }
 
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+
+    
 
     public void setTratamiento(Tratamiento tratamiento) {
         this.tratamiento = tratamiento;
@@ -68,6 +78,7 @@ public class TratamientoBeans {
     }
     
     public String terminarTratamiento(){
+        tratamiento.setObservaciones(obs);
         ejb.terminarTratamiento(tratamiento);
         return "Trabajo.xhtml";
     }
