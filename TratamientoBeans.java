@@ -38,10 +38,10 @@ public class TratamientoBeans {
 
     public void inic(){
         persona = pers.getPersona(login.getBuscado());
-        List<Tratamiento> lista = persona.getTratamiento();
+        List<Tratamiento> lista = ejb.tratamientos(login.getBuscado());
         tratamiento = new Tratamiento();
-        if (!persona.getTratamiento().isEmpty())
-            tratamiento = lista.get(persona.getTratamiento().size()-1);
+        if (!lista.isEmpty())
+            tratamiento = lista.get(lista.size()-1);
         listaCant = tratamiento.getCantidades();
     }
     /**

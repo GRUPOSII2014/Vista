@@ -142,6 +142,7 @@ public class DiagnosticoBeans {
         Medico me = pers.getMedico(login.getNss());
         trata.setTipo(Enumerados.tipoTratamiento.valueOf(var2));
         trata.setPersona(p1);
+        trata.setCantidades(tratamientos);
         
         informe.setTratamiento(trata);
         informe.setMedico(me);
