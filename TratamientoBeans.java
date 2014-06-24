@@ -39,7 +39,9 @@ public class TratamientoBeans {
     public void inic(){
         persona = pers.getPersona(login.getBuscado());
         List<Tratamiento> lista = persona.getTratamiento();
-        tratamiento = lista.get((persona.getTratamiento().isEmpty() ? 0:persona.getTratamiento().size()-1));
+        tratamiento = new Tratamiento();
+        if (!persona.getTratamiento().isEmpty())
+            tratamiento = lista.get(persona.getTratamiento().size()-1);
         listaCant = tratamiento.getCantidades();
     }
     /**
