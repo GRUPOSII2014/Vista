@@ -8,8 +8,10 @@ package Vista;
 import Ejb.IngresoEjb;
 import Ejb.PersonaEjb;
 import Entidades.Cantidad;
+import Entidades.Medicamento;
 import Entidades.Persona;
 import Entidades.Tratamiento;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -23,7 +25,7 @@ public class TratamientoBeans {
 
     private Tratamiento tratamiento;
     private String obs = "";
-    private List <Cantidad> listaCant;
+    private List <Cantidad> listaCant = new ArrayList<>();
     private Persona persona;
     @EJB
     private IngresoEjb ejb;
@@ -42,7 +44,13 @@ public class TratamientoBeans {
         tratamiento = new Tratamiento();
         if (!lista.isEmpty())
             tratamiento = lista.get(lista.size()-1);
-        listaCant = tratamiento.getCantidades();
+        Cantidad c = new Cantidad();
+        Medicamento m = new Medicamento();
+        m.setDescripcion("Radiación");
+        m.setNombre("Radiación");
+        c.setCantidad(12f);
+        c.setMedicamento(m);
+        listaCant.add(c);
     }
     /**
      * @return the t

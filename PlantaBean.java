@@ -63,7 +63,8 @@ public class PlantaBean {
     
     public String crearPlanta(){
         for(Hospital h : ejb.getHospitales()){
-            if(h.getId()==hospital){
+            int id = h.getId();
+            if(id == hospital){
                 planta.setHospital(h);
                 break;
             }

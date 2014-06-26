@@ -34,7 +34,7 @@ public class DiagnosticoBeans {
 
     private List<Medicamento> medicamentos;
     private int seleccionado;
-    private float cantidad;
+    private Float cantidad;
     private String res;
     private List<Cantidad> tratamientos=new ArrayList<>();
     private Informe informe=new Informe();
@@ -44,6 +44,7 @@ public class DiagnosticoBeans {
     private HistoriaClinica historia;
     private List<Informe> informes = new ArrayList<>();
     private Persona p1;
+    private Tratamiento trata = new Tratamiento();
     
     @EJB
     private PersonaEjb pers;
@@ -121,11 +122,11 @@ public class DiagnosticoBeans {
         this.tratamientos = tratamientos;
     }
 
-    public float getCantidad() {
+    public Float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(float cantidad) {
+    public void setCantidad(Float cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -142,7 +143,7 @@ public class DiagnosticoBeans {
         Medico me = pers.getMedico(login.getNss());
         trata.setTipo(Enumerados.tipoTratamiento.valueOf(var2));
         trata.setPersona(p1);
-        trata.setCantidades(tratamientos);
+        //trata.setCantidades(tratamientos);
         
         informe.setTratamiento(trata);
         informe.setMedico(me);
@@ -210,6 +211,7 @@ public class DiagnosticoBeans {
     public String anadirTratamiento(){
         Cantidad c = new Cantidad();
         c.setCantidad(cantidad);
+        c.setTratamiento(trata);
         c.setMedicamento(medic.getMedicamento().get(var3-1));
         tratamientos.add(c);
         return "null";
@@ -267,7 +269,7 @@ public class DiagnosticoBeans {
     public void setVar2(String var2) {
         this.var2 = var2;
     }
-    private Tratamiento trata = new Tratamiento();
+    
 
     public Tratamiento getTrata() {
         return trata;

@@ -22,7 +22,7 @@ import javax.faces.bean.RequestScoped;
 public class CrearHospitalBean {
     private String nombre;
     private String direccion;
-    private Integer codigoPostal;
+    private String codigoPostal;
     private String ciudad;
     private String localizacion;
     private Hospital hospital = new Hospital();
@@ -65,14 +65,14 @@ public class CrearHospitalBean {
     /**
      * @return the codigoPostal
      */
-    public Integer getCodigoPostal() {
+    public String getCodigoPostal() {
         return codigoPostal;
     }
 
     /**
      * @param codigoPostal the codigoPostal to set
      */
-    public void setCodigoPostal(Integer codigoPostal) {
+    public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
 
@@ -99,13 +99,19 @@ public class CrearHospitalBean {
     }
     
     public String crearHospital(){
+        Integer cod;
+        try{
+            cod = Integer.parseInt(codigoPostal);
+        }catch (NumberFormatException e){
+            return null;
+        }
         hospital.setNombre(nombre);
         hospital.setCiudad(ciudad);
         hospital.setDireccion(direccion);
-        hospital.setCodigoPostal(codigoPostal);
+        hospital.setCodigoPostal(cod);
         hospital.setLocalizacion(localizacion);
         ejb.crearHospital(hospital);
-        return null;
+        return "principal.xhtml";
     }
 
     /**

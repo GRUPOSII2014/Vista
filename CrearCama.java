@@ -22,14 +22,14 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrearCama {
-   private Entidades.Cama c;
+   private Cama c=new Cama();
+   private Integer n;
    private Long habi;
    @EJB
    private Ejb.crearCamaEjb ejb;
    
    
    public CrearCama(){
-       c = new Cama();
    }
     /**
      * @return the c
@@ -52,6 +52,14 @@ public class CrearCama {
     public void setC(Entidades.Cama c) {
         this.c = c;
     }
+
+    public Integer getN() {
+        return n;
+    }
+
+    public void setN(Integer n) {
+        this.n = n;
+    }
     
     public String crearCama (){
         for(Habitacion h : todasHabitaciones()){
@@ -60,9 +68,14 @@ public class CrearCama {
                 break;
             }
         }
-        c.setEstado(Enumerados.estadoCama.LIBRE);
-        ejb.comprobarCama(c);
-        
+        for (int i = 0 ; i<n;i++){
+            Cama c3 = new Cama();
+            c3.setEstado(Enumerados.estadoCama.LIBRE);
+            c3.setHabitacion(c.getHabitacion());
+            c3.setNum(1);
+            ejb.crearCama(c3);
+        }
+
         c = new Cama();
         return "principal.xhtml";
     }
